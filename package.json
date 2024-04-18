@@ -12,7 +12,7 @@
 		"build:clean": "rmdir /s /q build && tsc",
 		"watch": "tsc -watch",
 		"start": "node build/index.js",
-		"test": "npm run build:clean && npm run lint && npm run format && npm run build && npm run start"
+		"test": "npm run lint && npm run format && npm run build"
 	},
 	"repository": {
 		"type": "git",
