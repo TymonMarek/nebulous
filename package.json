@@ -1,39 +1,42 @@
 {
-  "name": "nebulous",
-  "type": "module",
-  "version": "1.0.0",
-  "description": "A Discord bot made using TypeScript and Discord.JS",
-  "main": "build/index.js",
-  "scripts": {
-    "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "format": "prettier --check .",
-    "format:fix": "prettier --write .",
-    "build": "tsc",
-    "build:clean": "rmdir /s /q build && tsc",
-    "watch": "tsc -watch",
-    "start": "node build/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TymonMarek/nebulous-client.git"
-  },
-  "author": "Tymon Marek",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/TymonMarek/nebulous-client/issues"
-  },
-  "homepage": "https://github.com/TymonMarek/nebulous-client#readme",
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.7.0",
-    "@typescript-eslint/parser": "^7.7.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.2.5"
-  },
-  "dependencies": {
-    "discord.js": "^14.14.1",
-    "dotenv": "^16.4.5",
-    "typescript": "^5.4.5"
-  }
+	"name": "nebulous",
+	"version": "1.0.0",
+	"description": "A Discord bot made using TypeScript and Discord.JS",
+	"main": "build/index.js",
+	"scripts": {
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"format": "prettier --check .",
+		"format:fix": "prettier --write .",
+		"build": "tsc",
+		"build:clean": "rmdir /s /q build && tsc",
+		"watch": "tsc -watch",
+		"start": "node build/index.js",
+		"test": "npm run build:clean && npm run lint && npm run format && npm run build && npm run start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/TymonMarek/nebulous-client.git"
+	},
+	"author": "Tymon Marek",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/TymonMarek/nebulous-client/issues"
+	},
+	"homepage": "https://github.com/TymonMarek/nebulous-client#readme",
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^7.7.0",
+		"@typescript-eslint/parser": "^7.7.0",
+		"eslint": "^8.57.0",
+		"eslint-config-prettier": "^9.1.0",
+		"prettier": "^3.2.5"
+	},
+	"dependencies": {
+		"chalk": "4.1.2",
+		"compressing": "^1.10.0",
+		"discord.js": "^14.14.1",
+		"dotenv": "^16.4.5",
+		"glob": "^10.3.12",
+		"typescript": "^5.4.5"
+	}
 }
