@@ -3,16 +3,18 @@ import { Client } from "discord.js";
 import dotenv from "dotenv";
 import Logger from "./Logger";
 import Handler from "./Handler";
+import IProcessArgs from "../interfaces/IProcessArgs";
 
 export default class Bot implements IBot {
 	client: Client;
+	args: IProcessArgs;
 
 	handler: Handler;
 	logger: Logger;
 
 	public constructor() {
 		this.client = new Client({ intents: [] });
-
+		this.args = this.ParseProcessArgs();
 		this.handler = new Handler(this);
 		this.logger = new Logger(this);
 	}
@@ -44,5 +46,15 @@ export default class Bot implements IBot {
 		}
 
 		this.logger.Info("Bot initilized!"); // Log that the bot is initialized
+	}
+
+	ParseProcessArgs(): IProcessArgs {
+		const args = process.argv.filter((arg) => arg.startsWith("--"));
+
+		const processArgs: IProcessArgs = {
+			verbose: args.includes("--verbose")
+		};
+
+		return processArgs;
 	}
 }

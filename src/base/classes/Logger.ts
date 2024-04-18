@@ -24,15 +24,18 @@ export default class Logger implements ILogger {
 		console.warn(yellow(message));
 	}
 
-	async Error(err: Error): Promise<void> {
+	async Error(err: Error): Promise<never> {
 		const text = `[${LogType.Error}] ${err.name} - ${err.message}\n${err.stack}`;
-		this.Save(text);
 		console.error(red(`${err.name}\n${err.message}\n${err.stack}`));
+		this.Save(text);
+		throw err;
 	}
 
 	async Debug(message: string): Promise<void> {
 		const text = `[${LogType.Debug}] ${message}`;
 		this.Save(text);
+
+		if (!this.bot.args.verbose) return;
 		console.debug(gray(message));
 	}
 

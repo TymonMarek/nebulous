@@ -1,6 +1,7 @@
 import Handler from "../classes/Handler";
 import Logger from "../classes/Logger";
 import { Client } from "discord.js";
+import IProcessArgs from "./IProcessArgs";
 
 export default interface IBot {
 	/**
@@ -9,6 +10,13 @@ export default interface IBot {
 	 * @public
 	 */
 	client: Client;
+
+	/**
+	 * @name args
+	 * @description The arguments for the bot.
+	 * @public
+	 */
+	args: IProcessArgs;
 
 	/**
 	 * @name logger
