@@ -10,7 +10,7 @@ import SubCommand from "./SubCommand";
 export default class Bot implements IBot {
 	readonly client: Client;
 	readonly args: IProcessArgs;
-	
+
 	readonly commands: Collection<string, Command>;
 	readonly subCommands: Collection<string, SubCommand>;
 
@@ -34,22 +34,18 @@ export default class Bot implements IBot {
 
 	async Initialize(): Promise<void> {
 		await this.logger.Initialize(); // Initialize the logger
-		
+
 		await this.handler.LoadEvents(); // Load the events
 		await this.handler.LoadCommands(); // Load the commands
 
 		if (dotenv.config().error) {
 			// Load the .env file and check for errors
-			throw new Error(
-				"No .env file found, please create a .env file with the required fields."
-			);
+			throw new Error("No .env file found, please create a .env file with the required fields.");
 		}
 
 		if (!process.env.TOKEN) {
 			// Check if the token is provided
-			throw new Error(
-				"No token provided, please provide a token in the .env file."
-			);
+			throw new Error("No token provided, please provide a token in the .env file.");
 		}
 
 		this.logger.Info("Bot is starting..."); // Log that the bot is starting

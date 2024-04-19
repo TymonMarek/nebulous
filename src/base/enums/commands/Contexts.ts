@@ -1,4 +1,3 @@
-
 /**
  * Enum for the different contexts a command can be executed in.
  * @property Guild (Interaction can be used within servers)
@@ -6,7 +5,7 @@
  * @property PM (Interaction can be used within Group DMs and DMs other than the app's bot user)
  * @readonly
  * @enum
-*/
+ */
 export enum Contexts {
 	/**
 	 * Interaction can be used within servers
@@ -21,5 +20,5 @@ export enum Contexts {
 	/**
 	 * Interaction can be used within Group DMs and DMs other than the app's bot user
 	 */
-	PriaveChannel = 2,
+	PriaveChannel = 2
 }

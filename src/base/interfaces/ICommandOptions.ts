@@ -35,7 +35,7 @@ export default interface ICommandOptions {
 
 	/**
 	 * The member permissions required to use the command.
-	 * 
+	 *
 	 */
 	default_member_permission: typeof PermissionFlagsBits;
 

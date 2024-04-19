@@ -13,8 +13,8 @@ export default interface ICommand {
 	readonly enabled: boolean;
 	readonly cooldown: number;
 	readonly nsfw: boolean;
-	
-	readonly default_member_permission: typeof PermissionFlagsBits; 
+
+	readonly default_member_permission: typeof PermissionFlagsBits;
 	readonly contexts: Contexts[];
 
 	readonly options: object;
@@ -22,7 +22,7 @@ export default interface ICommand {
 	/**
 	 * What to do when the command is executed.
 	 * @name Execute
-	 * @param {ChatInputCommandInteraction} interaction 
+	 * @param {ChatInputCommandInteraction} interaction
 	 * @readonly
 	 * @async
 	 */
@@ -31,7 +31,7 @@ export default interface ICommand {
 	/**
 	 * What to do when the command arguments are autocompleted.
 	 * @name Autocomplete
-	 * @param {AutocompleteInteraction} interaction 
+	 * @param {AutocompleteInteraction} interaction
 	 * @readonly
 	 * @async
 	 */

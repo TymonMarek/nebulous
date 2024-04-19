@@ -29,23 +29,21 @@ export default class InteractionCreate extends Event {
 				case InteractionType.ApplicationCommand:
 					this.bot.handler.OnApplicationCommand(interaction as ChatInputCommandInteraction);
 					break;
-	
+
 				case InteractionType.MessageComponent:
 					this.bot.handler.OnMessageComponent(interaction);
 					break;
-	
+
 				case InteractionType.ApplicationCommandAutocomplete:
 					this.bot.handler.OnAutocomplete(interaction);
 					break;
-	
+
 				case InteractionType.ModalSubmit:
 					this.bot.handler.OnModalSubmit(interaction);
 					break;
 			}
 		} catch (error) {
-			return this.bot.logger.Error(
-				new Error(`Interaction ${interaction.id} failed to process: ${error}`)
-			);			
+			return this.bot.logger.Error(new Error(`Interaction ${interaction.id} failed to process: ${error}`));
 		}
 
 		this.bot.logger.Debug(`Interaction ${interaction.id} processed successfully!`);

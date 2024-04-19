@@ -96,10 +96,7 @@ export default class Logger implements ILogger {
 		try {
 			const date = new Date();
 			const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-			await gzip.compressFile(
-				file,
-				`${process.cwd()}/logs/${formattedDate}.txt.gz`
-			);
+			await gzip.compressFile(file, `${process.cwd()}/logs/${formattedDate}.txt.gz`);
 		} catch (err) {
 			console.error("Failed to compress file: ", err);
 		}

@@ -1,10 +1,9 @@
-
 /**
  * Enum for Integration Type
  * @property Guild integration type (App is installable to servers)
  * @property User integration type (App is installable to users)
- * @enum 
-*/
+ * @enum
+ */
 export enum Integration {
 	/**
 	 * Guild integration type (App is installable to servers)
@@ -14,5 +13,5 @@ export enum Integration {
 	/**
 	 * User integration type (App is installable to users)
 	 */
-	User = 1,
+	User = 1
 }

@@ -1,4 +1,9 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, MessageComponentInteraction, ModalSubmitInteraction } from "discord.js";
+import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
+	MessageComponentInteraction,
+	ModalSubmitInteraction
+} from "discord.js";
 import Bot from "../classes/Bot";
 
 export default interface IHandler {
@@ -34,7 +39,7 @@ export default interface IHandler {
 	 * @async
 	 */
 	OnApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void>;
-	
+
 	/**
 	 * @name OnAutocomplete
 	 * @description Handles an autocomplete interaction.
