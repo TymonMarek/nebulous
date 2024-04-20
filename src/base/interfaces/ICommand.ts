@@ -1,6 +1,6 @@
+import { AutocompleteInteraction, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 import { Category } from "../enums/commands/Category";
 import { Contexts } from "../enums/commands/Contexts";
-import { AutocompleteInteraction, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
 import Bot from "../classes/Bot";
 
 export default interface ICommand {

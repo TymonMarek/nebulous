@@ -6,6 +6,7 @@ import Handler from "./Handler";
 import IProcessArgs from "../interfaces/IProcessArgs";
 import Command from "./Command";
 import SubCommand from "./SubCommand";
+import Loader from "./Loader";
 
 export default class Bot implements IBot {
 	readonly client: Client;
@@ -16,7 +17,9 @@ export default class Bot implements IBot {
 
 	readonly cooldowns: Collection<string, Collection<string, number>>;
 
+	readonly loader: Loader;
 	readonly handler: Handler;
+
 	readonly logger: Logger;
 
 	public constructor() {
@@ -28,15 +31,17 @@ export default class Bot implements IBot {
 
 		this.cooldowns = new Collection();
 
+		this.loader = new Loader(this);
 		this.handler = new Handler(this);
+
 		this.logger = new Logger(this);
 	}
 
 	async Initialize(): Promise<void> {
 		await this.logger.Initialize(); // Initialize the logger
 
-		await this.handler.LoadEvents(); // Load the events
-		await this.handler.LoadCommands(); // Load the commands
+		await this.loader.LoadEvents(); // Load the events
+		await this.loader.LoadCommands(); // Load the commands
 
 		if (dotenv.config().error) {
 			// Load the .env file and check for errors

@@ -17,22 +17,6 @@ export default interface IHandler {
 	readonly bot: Bot;
 
 	/**
-	 * @name LoadCommands
-	 * @description Loads the commands.
-	 * @public
-	 * @async
-	 */
-	LoadEvents(): Promise<void>;
-
-	/**
-	 * @name LoadCommands
-	 * @description Loads the commands.
-	 * @public
-	 * @async
-	 */
-	LoadCommands(): Promise<void>;
-
-	/**
 	 * @name OnApplicationCommand
 	 * @description Handles a command.
 	 * @param {ChatInputCommandInteraction} interaction The interaction.
