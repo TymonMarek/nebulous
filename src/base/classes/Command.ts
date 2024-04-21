@@ -1,9 +1,10 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
+import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import ICommandOptions from "../interfaces/ICommandOptions";
 import { Contexts } from "../enums/commands/Contexts";
 import { Category } from "../enums/commands/Category";
 import ICommand from "../interfaces/ICommand";
 import Bot from "./Bot";
+import IAPICommand from "../interfaces/IAPICommand";
 
 export default class Command implements ICommand {
 	readonly bot: Bot;
@@ -16,7 +17,7 @@ export default class Command implements ICommand {
 	readonly cooldown: number;
 	readonly nsfw: boolean;
 
-	readonly default_member_permission: typeof PermissionFlagsBits;
+	readonly default_member_permission: bigint;
 	readonly contexts: Contexts[];
 
 	readonly options: object;
@@ -46,5 +47,20 @@ export default class Command implements ICommand {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async Autocomplete(interaction: AutocompleteInteraction) {
 		throw new Error("Method not implemented.");
+	}
+
+	async toJSON(): Promise<IAPICommand> {
+		const data: IAPICommand = {
+			options: this.options,
+
+			name: this.name,
+			description: this.description,
+			
+			default_member_permission: this.default_member_permission.toString(),
+			contexts: this.contexts,
+			nsfw: this.nsfw,
+		};
+
+		return data;
 	}
 }

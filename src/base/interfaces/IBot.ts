@@ -4,6 +4,8 @@ import { Client, Collection } from "discord.js";
 import IProcessArgs from "./IProcessArgs";
 import Command from "../classes/Command";
 import SubCommand from "../classes/SubCommand";
+import Loader from "../classes/Loader";
+import Registrar from "../classes/Registrar";
 
 export default interface IBot {
 	/**
@@ -12,6 +14,13 @@ export default interface IBot {
 	 * @public
 	 */
 	client: Client;
+
+	/**
+	 * @name token
+	 * @description The token for the bot.
+	 * @public
+	 */
+	token: string;
 
 	/**
 	 * @name commands
@@ -40,6 +49,20 @@ export default interface IBot {
 	 * @public
 	 */
 	args: IProcessArgs;
+
+	/**
+	 * @name registrar
+	 * @description The registrar for the bot.
+	 * @public
+	 */
+	registrar: Registrar;
+
+	/**
+	 * @name loader
+	 * @description The loader for the bot.
+	 * @public
+	 */
+	loader: Loader;
 
 	/**
 	 * @name logger

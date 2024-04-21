@@ -7,9 +7,12 @@ import IProcessArgs from "../interfaces/IProcessArgs";
 import Command from "./Command";
 import SubCommand from "./SubCommand";
 import Loader from "./Loader";
+import Registrar from "./Registrar";
 
 export default class Bot implements IBot {
 	readonly client: Client;
+	readonly token: string;
+
 	readonly args: IProcessArgs;
 
 	readonly commands: Collection<string, Command>;
@@ -17,31 +20,14 @@ export default class Bot implements IBot {
 
 	readonly cooldowns: Collection<string, Collection<string, number>>;
 
-	readonly loader: Loader;
+	readonly registrar: Registrar;
 	readonly handler: Handler;
 
+	readonly loader: Loader;
 	readonly logger: Logger;
 
 	public constructor() {
 		this.client = new Client({ intents: [] });
-		this.args = this.ParseProcessArgs();
-
-		this.commands = new Collection();
-		this.subCommands = new Collection();
-
-		this.cooldowns = new Collection();
-
-		this.loader = new Loader(this);
-		this.handler = new Handler(this);
-
-		this.logger = new Logger(this);
-	}
-
-	async Initialize(): Promise<void> {
-		await this.logger.Initialize(); // Initialize the logger
-
-		await this.loader.LoadEvents(); // Load the events
-		await this.loader.LoadCommands(); // Load the commands
 
 		if (dotenv.config().error) {
 			// Load the .env file and check for errors
@@ -53,7 +39,29 @@ export default class Bot implements IBot {
 			throw new Error("No token provided, please provide a token in the .env file.");
 		}
 
-		this.logger.Info("Bot is starting..."); // Log that the bot is starting
+		this.token = process.env.TOKEN;
+
+		this.args = this.ParseProcessArgs();
+
+		this.commands = new Collection();
+		this.subCommands = new Collection();
+
+		this.cooldowns = new Collection();
+
+		this.registrar = new Registrar(this);
+		this.handler = new Handler(this);
+
+		this.loader = new Loader(this);
+		this.logger = new Logger(this);
+	}
+
+	async Initialize(): Promise<void> {
+		await this.logger.Initialize(); // Initialize the logger
+		this.logger.Debug("Bot is starting..."); // Log that the bot is starting
+
+		await this.loader.LoadEvents(); // Load the events
+		await this.loader.LoadCommands(); // Load the commands
+
 
 		try {
 			await this.client.login(process.env.TOKEN); // Login to the client
@@ -61,7 +69,7 @@ export default class Bot implements IBot {
 			console.error(error); // Log if there is an error
 		}
 
-		this.logger.Info("Bot initilized!"); // Log that the bot is initialized
+		this.logger.Info("Bot loaded!"); // Log that the bot is loaded
 	}
 
 	ParseProcessArgs(): IProcessArgs {

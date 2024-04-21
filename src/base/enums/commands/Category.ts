@@ -1,4 +1,6 @@
 /**
  * The category of a command.
  */
-export enum Category {}
+export enum Category {
+	Debug = "Debug",
+}

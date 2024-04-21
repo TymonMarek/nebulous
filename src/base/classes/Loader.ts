@@ -12,13 +12,13 @@ export default class Loader implements ILoader {
 	constructor(bot: Bot) {
 		this.bot = bot;
 	}
-	
+
 	async LoadEvents(): Promise<void> {
 		const files = (await glob(`${path.join(__dirname, "../../events")}/**/*.js`)).map((file) => path.resolve(file));
 
 		this.bot.logger.Debug("Loading events...");
 
-		files.map(async (file) => {
+		const eventLoader = files.map(async (file) => {
 			const event: Event = new (await import(file)).default(this.bot);
 
 			if (!event.name) {
@@ -49,6 +49,7 @@ export default class Loader implements ILoader {
 			return delete require.cache[require.resolve(file)];
 		});
 
+		await Promise.all(eventLoader);
 		this.bot.logger.Info("Events loaded!");
 	}
 
@@ -59,7 +60,7 @@ export default class Loader implements ILoader {
 
 		this.bot.logger.Debug("Loading commands...");
 
-		files.map(async (file) => {
+		const commandLoader = files.map(async (file) => {
 			const command: Command | SubCommand = new (await import(file)).default(this.bot);
 
 			if (!command.name) {
@@ -88,7 +89,7 @@ export default class Loader implements ILoader {
 			return delete require.cache[require.resolve(file)];
 		});
 
+		await Promise.all(commandLoader);
 		this.bot.logger.Info("Commands loaded!");
 	}
-
 }

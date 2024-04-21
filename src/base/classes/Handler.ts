@@ -1,9 +1,11 @@
+import { Contexts } from "../enums/commands/Contexts";
 import IHandler from "../interfaces/IHandler";
 import Bot from "./Bot";
 
 import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
+	Collection,
 	MessageComponentInteraction,
 	ModalSubmitInteraction
 } from "discord.js";
@@ -15,9 +17,81 @@ export default class Handler implements IHandler {
 		this.bot = bot;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async OnApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void> {
-		throw new Error("Method not implemented.");
+		const command = this.bot.commands.get(interaction.commandName);
+
+		if (!command) {
+			interaction.reply({ content: "This command doesn't exist!", ephemeral: true });
+			this.bot.logger.Warn(`A user tried to use ${interaction.commandName} but it doesn't exist!`);
+			return;
+		}
+
+		if (interaction.guild && !command.contexts.includes(Contexts.Guild)) {
+			interaction.reply({ content: "This command can't be used in a guild!", ephemeral: true });
+			this.bot.logger.Warn(
+				`A user tried to use ${interaction.commandName} in a guild but it can't be used in a guild!`
+			);
+			return;
+		}
+
+		if (!interaction.guild && !command.contexts.includes(Contexts.DirectMessage)) {
+			interaction.reply({ content: "This command can't be used in a DM!", ephemeral: true });
+			this.bot.logger.Warn(
+				`A user tried to use ${interaction.commandName} in a DM but it can't be used in a DM!`
+			);
+			return;
+		}
+
+		if (command.cooldown > 0) {
+			if (!this.bot.cooldowns.has(command.name)) {
+				this.bot.cooldowns.set(command.name, new Collection());
+			}
+
+			const now = Date.now();
+			const cooldown = command.cooldown * 1000;
+			const timestamps = this.bot.cooldowns.get(command.name)!;
+
+			if (timestamps.has(interaction.user.id)) {
+				const expirationTime = timestamps.get(interaction.user.id)! + cooldown;
+
+				if (now < expirationTime) {
+					const timeLeft = (expirationTime - now) / 1000;
+					interaction.reply({
+						content: `Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`,
+						ephemeral: true
+					});
+
+					setTimeout(() => {
+						interaction.deleteReply();
+						timestamps.delete(interaction.user.id);
+						if (timestamps.size === 0) this.bot.cooldowns.delete(command.name);
+					}, expirationTime - now);
+
+					return;
+				}
+			}
+
+			timestamps.set(interaction.user.id, now);
+
+			setTimeout(() => {
+				timestamps.delete(interaction.user.id);
+				if (timestamps.size === 0) this.bot.cooldowns.delete(command.name);
+			}, cooldown);
+		}
+
+		try {
+			await command.Execute(interaction);
+		} catch (error) {
+			interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+
+			if (error instanceof Error) {
+				this.bot.logger.Error(error);
+			} else {
+				this.bot.logger.Error(new Error(String(error)));
+			}
+		}
+
+		this.bot.logger.Debug(`${interaction.user.tag} executed ${interaction.commandName}`);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -25,9 +99,15 @@ export default class Handler implements IHandler {
 		throw new Error("Method not implemented.");
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async OnAutocomplete(interaction: AutocompleteInteraction): Promise<void> {
-		throw new Error("Method not implemented.");
+		const command = this.bot.commands.get(interaction.commandName);
+		if (!command) return;
+
+		if (command.Autocomplete) {
+			command.Autocomplete(interaction);
+		}
+
+		this.bot.logger.Debug(`${interaction.user.tag} autocompleted ${interaction.commandName}`);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

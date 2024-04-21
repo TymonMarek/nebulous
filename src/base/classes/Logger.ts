@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync, appendFileSync } from "fs";
 import { blue, yellow, red, gray } from "chalk";
 import ILogger from "../interfaces/ILogger";
-import { LogType } from "../enums/LogType";
+import { Type } from "../enums/log/Type";
 import { gzip } from "compressing";
 import Bot from "./Bot";
 
@@ -13,26 +13,26 @@ export default class Logger implements ILogger {
 	}
 
 	async Info(message: string): Promise<void> {
-		const text = `[${LogType.Info}] ${message}`;
+		const text = `[${Type.Info}] ${message}`;
 		this.Save(text);
 		console.log(blue(message));
 	}
 
 	async Warn(message: string): Promise<void> {
-		const text = `[${LogType.Warn}] ${message}`;
+		const text = `[${Type.Warn}] ${message}`;
 		this.Save(text);
 		console.warn(yellow(message));
 	}
 
 	async Error(err: Error): Promise<never> {
-		const text = `[${LogType.Error}] ${err.name} - ${err.message}\n${err.stack}`;
+		const text = `[${Type.Error}] ${err.name} - ${err.message}\n${err.stack}`;
 		console.error(red(`${err.name}\n${err.message}\n${err.stack}`));
 		this.Save(text);
 		throw err;
 	}
 
 	async Debug(message: string): Promise<void> {
-		const text = `[${LogType.Debug}] ${message}`;
+		const text = `[${Type.Debug}] ${message}`;
 		this.Save(text);
 
 		if (!this.bot.args.verbose) return;
@@ -69,6 +69,11 @@ export default class Logger implements ILogger {
 		}
 
 		this.Info("Logger initialized.");
+
+		if (this.bot.args.verbose) {
+			this.Warn("Launched in verbose mode, this will log more information than usual.");
+			this.Warn("This mode is not recommended for production use!");
+		}
 	}
 
 	/**

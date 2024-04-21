@@ -25,5 +25,4 @@ export default interface ILoader {
 	 * @async
 	 */
 	LoadCommands(): Promise<void>;
-
 }

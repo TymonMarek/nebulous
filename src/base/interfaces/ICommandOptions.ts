@@ -1,6 +1,5 @@
 import { Category } from "../enums/commands/Category";
 import { Contexts } from "../enums/commands/Contexts";
-import { PermissionFlagsBits } from "discord.js";
 
 export default interface ICommandOptions {
 	/**
@@ -37,7 +36,7 @@ export default interface ICommandOptions {
 	 * The member permissions required to use the command.
 	 *
 	 */
-	default_member_permission: typeof PermissionFlagsBits;
+	default_member_permission: bigint;
 
 	/**
 	 * The contexts the command can be ran in.
