@@ -62,7 +62,6 @@ export default class Bot implements IBot {
 		await this.loader.LoadEvents(); // Load the events
 		await this.loader.LoadCommands(); // Load the commands
 
-
 		try {
 			await this.client.login(process.env.TOKEN); // Login to the client
 		} catch (error) {

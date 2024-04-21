@@ -55,10 +55,10 @@ export default class Command implements ICommand {
 
 			name: this.name,
 			description: this.description,
-			
+
 			default_member_permission: this.default_member_permission.toString(),
 			contexts: this.contexts,
-			nsfw: this.nsfw,
+			nsfw: this.nsfw
 		};
 
 		return data;

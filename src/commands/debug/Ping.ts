@@ -17,11 +17,16 @@ export default class Ping extends Command {
 
 			default_member_permission: PermissionFlagsBits.SendMessages,
 			contexts: [Contexts.Guild, Contexts.DirectMessage, Contexts.PriaveChannel],
-			options: [],
+			options: []
 		});
 	}
 
 	async Execute(interaction: ChatInputCommandInteraction) {
-		await interaction.reply("Pong!");
+		await interaction.deferReply({ ephemeral: true });
+
+		const now = Date.now();
+		const ping = Math.floor(now - interaction.createdTimestamp);
+
+		await interaction.editReply(`🏓 Pong! \`${ping}ms\``);
 	}
 }
