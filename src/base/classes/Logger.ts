@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync, appendFileSync } from "fs";
 import { blue, yellow, red, gray } from "chalk";
 import ILogger from "../interfaces/ILogger";
-import { Type } from "../enums/log/Type";
+import { Type } from "../enums/Type";
 import { gzip } from "compressing";
 import Bot from "./Bot";
 
