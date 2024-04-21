@@ -1,7 +1,7 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import ICommandOptions from "../interfaces/ICommandOptions";
-import { Contexts } from "../enums/commands/Contexts";
-import { Category } from "../enums/commands/Category";
+import { Contexts } from "../enums/Contexts";
+import { Category } from "../enums/Category";
 import ICommand from "../interfaces/ICommand";
 import Bot from "./Bot";
 import IAPICommand from "../interfaces/IAPICommand";
