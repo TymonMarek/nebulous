@@ -1,8 +1,14 @@
+import { Contexts } from "../enums/commands/Contexts";
 import IHandler from "../interfaces/IHandler";
-import Event from "../classes/Event";
-import { glob } from "glob";
-import path from "path";
 import Bot from "./Bot";
+
+import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
+	Collection,
+	MessageComponentInteraction,
+	ModalSubmitInteraction
+} from "discord.js";
 
 export default class Handler implements IHandler {
 	bot: Bot;
@@ -11,54 +17,101 @@ export default class Handler implements IHandler {
 		this.bot = bot;
 	}
 
-	async LoadEvents(): Promise<void> {
-		const files = (
-			await glob(`${path.join(__dirname, "../../events")}/**/*.js`)
-		).map((file) => path.resolve(file));
+	async OnApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void> {
+		const command = this.bot.commands.get(interaction.commandName);
 
-		this.bot.logger.Debug("Loading events...");
+		if (!command) {
+			interaction.reply({ content: "This command doesn't exist!", ephemeral: true });
+			this.bot.logger.Warn(`A user tried to use ${interaction.commandName} but it doesn't exist!`);
+			return;
+		}
 
-		files.map(async (file) => {
-			const event: Event = new (await import(file)).default(this.bot);
+		if (interaction.guild && !command.contexts.includes(Contexts.Guild)) {
+			interaction.reply({ content: "This command can't be used in a guild!", ephemeral: true });
+			this.bot.logger.Warn(
+				`A user tried to use ${interaction.commandName} in a guild but it can't be used in a guild!`
+			);
+			return;
+		}
 
-			if (!event.name) {
-				this.bot.logger.Warn(
-					`${file} failed to load due to missing name!`
-				);
-				return delete require.cache[require.resolve(file)];
+		if (!interaction.guild && !command.contexts.includes(Contexts.DirectMessage)) {
+			interaction.reply({ content: "This command can't be used in a DM!", ephemeral: true });
+			this.bot.logger.Warn(
+				`A user tried to use ${interaction.commandName} in a DM but it can't be used in a DM!`
+			);
+			return;
+		}
+
+		if (command.cooldown > 0) {
+			if (!this.bot.cooldowns.has(command.name)) {
+				this.bot.cooldowns.set(command.name, new Collection());
 			}
 
-			if (!event.enabled) {
-				this.bot.logger.Warn(
-					`${file} failed to load due to being disabled!`
-				);
-				return delete require.cache[require.resolve(file)];
-			}
+			const now = Date.now();
+			const cooldown = command.cooldown * 1000;
+			const timestamps = this.bot.cooldowns.get(command.name)!;
 
-			try {
-				this.bot.logger.Debug(`Loading event ${event.name}`);
+			if (timestamps.has(interaction.user.id)) {
+				const expirationTime = timestamps.get(interaction.user.id)! + cooldown;
 
-				if (event.once) {
-					// @ts-expect-error This correctly passes the arguments to the event
-					this.bot.client.once(event.name, (...args) =>
-						event.Execute(...args)
-					);
-				} else {
-					// @ts-expect-error This correctly passes the arguments to the event
-					this.bot.client.on(event.name, (...args) =>
-						event.Execute(...args)
-					);
+				if (now < expirationTime) {
+					const timeLeft = (expirationTime - now) / 1000;
+					interaction.reply({
+						content: `Please wait ${timeLeft.toFixed(1)} more second(s) before reusing the \`${command.name}\` command.`,
+						ephemeral: true
+					});
+
+					setTimeout(() => {
+						interaction.deleteReply();
+						timestamps.delete(interaction.user.id);
+						if (timestamps.size === 0) this.bot.cooldowns.delete(command.name);
+					}, expirationTime - now);
+
+					return;
 				}
-			} catch (error) {
-				this.bot.logger.Error(
-					new Error(`Event ${file} failed to load: ${error}`)
-				);
 			}
 
-			this.bot.logger.Debug(`Event ${event.name} loaded!`);
-			return delete require.cache[require.resolve(file)];
-		});
+			timestamps.set(interaction.user.id, now);
 
-		this.bot.logger.Info("Events loaded!");
+			setTimeout(() => {
+				timestamps.delete(interaction.user.id);
+				if (timestamps.size === 0) this.bot.cooldowns.delete(command.name);
+			}, cooldown);
+		}
+
+		try {
+			await command.Execute(interaction);
+		} catch (error) {
+			interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+
+			if (error instanceof Error) {
+				this.bot.logger.Error(error);
+			} else {
+				this.bot.logger.Error(new Error(String(error)));
+			}
+		}
+
+		this.bot.logger.Debug(`${interaction.user.tag} executed ${interaction.commandName}`);
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	async OnMessageComponent(interaction: MessageComponentInteraction): Promise<void> {
+		throw new Error("Method not implemented.");
+	}
+
+	async OnAutocomplete(interaction: AutocompleteInteraction): Promise<void> {
+		const command = this.bot.commands.get(interaction.commandName);
+		if (!command) return;
+
+		if (command.Autocomplete) {
+			command.Autocomplete(interaction);
+		}
+
+		this.bot.logger.Debug(`${interaction.user.tag} autocompleted ${interaction.commandName}`);
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	async OnModalSubmit(interaction: ModalSubmitInteraction): Promise<void> {
+		throw new Error("Method not implemented.");
 	}
 }

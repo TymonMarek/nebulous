@@ -1,7 +1,11 @@
 import Handler from "../classes/Handler";
 import Logger from "../classes/Logger";
-import { Client } from "discord.js";
+import { Client, Collection } from "discord.js";
 import IProcessArgs from "./IProcessArgs";
+import Command from "../classes/Command";
+import SubCommand from "../classes/SubCommand";
+import Loader from "../classes/Loader";
+import Registrar from "../classes/Registrar";
 
 export default interface IBot {
 	/**
@@ -12,11 +16,53 @@ export default interface IBot {
 	client: Client;
 
 	/**
+	 * @name token
+	 * @description The token for the bot.
+	 * @public
+	 */
+	token: string;
+
+	/**
+	 * @name commands
+	 * @description The commands for the bot.
+	 * @public
+	 */
+	commands: Collection<string, Command>;
+
+	/**
+	 * @name subcommands
+	 * @description The subcommands for the bot.
+	 * @public
+	 */
+	subCommands: Collection<string, SubCommand>;
+
+	/**
+	 * @name cooldowns
+	 * @description The cooldowns for users using commands.
+	 * @public
+	 */
+	cooldowns: Collection<string, Collection<string, number>>;
+
+	/**
 	 * @name args
-	 * @description The arguments for the bot.
+	 * @description The arguments for the bot passed on startup.
 	 * @public
 	 */
 	args: IProcessArgs;
+
+	/**
+	 * @name registrar
+	 * @description The registrar for the bot.
+	 * @public
+	 */
+	registrar: Registrar;
+
+	/**
+	 * @name loader
+	 * @description The loader for the bot.
+	 * @public
+	 */
+	loader: Loader;
 
 	/**
 	 * @name logger
@@ -27,7 +73,7 @@ export default interface IBot {
 
 	/**
 	 * @name handler
-	 * @description The handler for the bot.
+	 * @description The event and command handler for the bot.
 	 * @public
 	 */
 	handler: Handler;
@@ -38,4 +84,11 @@ export default interface IBot {
 	 * @public
 	 */
 	Initialize(): Promise<void>; // Initialize the bot
+
+	/**
+	 * @name ParseProcessArgs
+	 * @description Parses the process arguments.
+	 * @public
+	 */
+	ParseProcessArgs(): IProcessArgs; // Parse the process arguments
 }
