@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
-import { Category } from "../../base/enums/commands/Category";
-import { Contexts } from "../../base/enums/commands/Contexts";
+import { Category } from "../../base/enums/Category";
+import { Contexts } from "../../base/enums/Contexts";
 import Command from "../../base/classes/Command";
 import Bot from "../../base/classes/Bot";
 

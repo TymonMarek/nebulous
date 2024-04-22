@@ -1,4 +1,4 @@
-import { Contexts } from "../enums/commands/Contexts";
+import { Contexts } from "../enums/Contexts";
 import IHandler from "../interfaces/IHandler";
 import Bot from "./Bot";
 
