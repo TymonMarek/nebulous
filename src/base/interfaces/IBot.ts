@@ -6,6 +6,7 @@ import Command from "../classes/Command";
 import SubCommand from "../classes/SubCommand";
 import Loader from "../classes/Loader";
 import Registrar from "../classes/Registrar";
+import Database from "../classes/Database";
 
 export default interface IBot {
 	/**
@@ -14,6 +15,13 @@ export default interface IBot {
 	 * @public
 	 */
 	client: Client;
+
+	/**
+	 * @name mongodbURI
+	 * @description The mongodb database URI for the bot.
+	 * @public
+	 */
+	mongodbURI: string;
 
 	/**
 	 * @name token
@@ -49,6 +57,13 @@ export default interface IBot {
 	 * @public
 	 */
 	args: IProcessArgs;
+
+	/**
+	 * @name database
+	 * @description The database for the bot.
+	 * @public
+	 */
+	database: Database;
 
 	/**
 	 * @name registrar
