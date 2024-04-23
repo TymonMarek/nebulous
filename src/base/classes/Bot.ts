@@ -1,14 +1,15 @@
-import IBot from "../interfaces/IBot";
-import { Client, Collection } from "discord.js";
-import dotenv from "dotenv";
-import Logger from "./Logger";
-import Handler from "./Handler";
 import IProcessArgs from "../interfaces/IProcessArgs";
-import Command from "./Command";
+import { Client, Collection } from "discord.js";
+import IBot from "../interfaces/IBot";
 import SubCommand from "./SubCommand";
-import Loader from "./Loader";
+import Formatter from "./Formatter";
 import Registrar from "./Registrar";
 import Database from "./Database";
+import Command from "./Command";
+import Handler from "./Handler";
+import Loader from "./Loader";
+import Logger from "./Logger";
+import dotenv from "dotenv";
 
 export default class Bot implements IBot {
 	readonly client: Client;
@@ -25,6 +26,8 @@ export default class Bot implements IBot {
 
 	readonly database: Database;
 
+	readonly formatter: Formatter;
+
 	readonly registrar: Registrar;
 	readonly handler: Handler;
 
@@ -32,25 +35,26 @@ export default class Bot implements IBot {
 	readonly logger: Logger;
 
 	public constructor() {
+		this.logger = new Logger(this);
 		this.client = new Client({ intents: [] });
 
 		if (dotenv.config().error) {
 			// Load the .env file and check for errors
-			throw new Error("No .env file found, please create a .env file with the required fields.");
+			this.logger.Error(new Error("No .env file found, please create a .env file with the required fields."));
 		}
 
 		if (!process.env.DISCORD_TOKEN) {
 			// Check if the token is provided
-			throw new Error("No token provided, please provide a token in the .env file.");
+			this.logger.Error(new Error("No token provided, please provide a token in the .env file."));
 		}
 
 		if (!process.env.MONGODB_URI) {
 			// Check if the mongodb URI is provided
-			throw new Error("No mongodb URI provided, please provide a mongodb URI in the .env file.");
+			this.logger.Error(new Error("No MongoDB URI provided, please provide a MongoDB URI in the .env file."));
 		}
 
-		this.mongodbURI = process.env.MONGODB_URI;
-		this.token = process.env.DISCORD_TOKEN;
+		this.mongodbURI = process.env.MONGODB_URI!;
+		this.token = process.env.DISCORD_TOKEN!;
 
 		this.args = this.ParseProcessArgs();
 
@@ -61,11 +65,12 @@ export default class Bot implements IBot {
 
 		this.database = new Database(this);
 
+		this.formatter = new Formatter();
+
 		this.registrar = new Registrar(this);
 		this.handler = new Handler(this);
 
 		this.loader = new Loader(this);
-		this.logger = new Logger(this);
 	}
 
 	async Initialize(): Promise<void> {

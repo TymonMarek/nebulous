@@ -7,6 +7,7 @@ import SubCommand from "../classes/SubCommand";
 import Loader from "../classes/Loader";
 import Registrar from "../classes/Registrar";
 import Database from "../classes/Database";
+import Formatter from "../classes/Formatter";
 
 export default interface IBot {
 	/**
@@ -64,6 +65,13 @@ export default interface IBot {
 	 * @public
 	 */
 	database: Database;
+
+	/**
+	 * @name formatter
+	 * @description The formatter for the bot.
+	 * @public
+	 */
+	formatter: Formatter;
 
 	/**
 	 * @name registrar
