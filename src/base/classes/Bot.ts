@@ -14,7 +14,7 @@ import dotenv from "dotenv";
 export default class Bot implements IBot {
 	readonly client: Client;
 
-	readonly mongodbURI: string;
+	readonly mongodbURL: string;
 	readonly token: string;
 
 	readonly args: IProcessArgs;
@@ -36,6 +36,7 @@ export default class Bot implements IBot {
 
 	public constructor() {
 		this.logger = new Logger(this);
+		
 		this.client = new Client({ intents: [] });
 
 		if (dotenv.config().error) {
@@ -45,15 +46,15 @@ export default class Bot implements IBot {
 
 		if (!process.env.DISCORD_TOKEN) {
 			// Check if the token is provided
-			this.logger.Error(new Error("No token provided, please provide a token in the .env file."));
+			this.logger.Error(new Error("No token provided, please provide a DISCORD_TOKEN in the .env file."));
 		}
 
-		if (!process.env.MONGODB_URI) {
-			// Check if the mongodb URI is provided
-			this.logger.Error(new Error("No MongoDB URI provided, please provide a MongoDB URI in the .env file."));
+		if (!process.env.MONGODB_URL) {
+			// Check if the mongodb username is provided
+			this.logger.Error(new Error("No MongoDB URL provided, please provide a MONGODB_URL in the .env file."));
 		}
 
-		this.mongodbURI = process.env.MONGODB_URI!;
+		this.mongodbURL = process.env.MONGODB_URL!;
 		this.token = process.env.DISCORD_TOKEN!;
 
 		this.args = this.ParseProcessArgs();
@@ -74,7 +75,6 @@ export default class Bot implements IBot {
 	}
 
 	async Initialize(): Promise<void> {
-		await this.logger.Initialize(); // Initialize the logger
 		this.logger.Debug("Bot is starting..."); // Log that the bot is starting
 
 		await this.database.Connect(); // Connect to the database
@@ -82,9 +82,9 @@ export default class Bot implements IBot {
 		await this.loader.LoadCommands(); // Load the commands
 
 		try {
-			await this.client.login(process.env.TOKEN); // Login to the client
+			await this.client.login(this.token); // Login to the client.
 		} catch (error) {
-			console.error(error); // Log if there is an error
+			this.logger.Error(error); // Log if there is an error
 		}
 
 		this.logger.Info("Bot loaded!"); // Log that the bot is loaded
