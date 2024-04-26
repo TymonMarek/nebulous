@@ -135,3 +135,7 @@ build
 # Github
 .github
 LICENSE.md
+
+# Keys
+keys
+certs
