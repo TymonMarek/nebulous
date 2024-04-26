@@ -21,19 +21,27 @@ export default class Database implements IDatabase {
 
 	async Connect(): Promise<void> {
 		try {
-			await mongoose.connect(this.bot.mongodbURI);
-			this.bot.logger.Info("Connected to MongoDB.");
+			await mongoose.connect(
+				`mongodb+srv://${this.bot.mongodbURL}/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority`,
+				{
+					tlsCertificateKeyFile: `${process.cwd()}/certs/mongodb.pem`,
+					authMechanism: "MONGODB-X509",
+					authSource: "$external"
+				}
+			);
+
+			this.bot.logger.info("Connected to MongoDB.");
 		} catch (error) {
-			this.bot.logger.Error(new Error(`Failed to connect to MongoDB: ${error}`));
+			this.bot.logger.error(new Error(`Failed to connect to MongoDB: ${error}`));
 		}
 	}
 
 	async Disconnect(): Promise<void> {
 		try {
 			await mongoose.disconnect();
-			this.bot.logger.Info("Disconnected from MongoDB.");
+			this.bot.logger.info("Disconnected from MongoDB.");
 		} catch (error) {
-			this.bot.logger.Error(new Error(`Failed to disconnect from MongoDB: ${error}`));
+			this.bot.logger.error(new Error(`Failed to disconnect from MongoDB: ${error}`));
 		}
 	}
 }

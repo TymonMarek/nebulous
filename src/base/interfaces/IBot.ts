@@ -18,11 +18,11 @@ export default interface IBot {
 	client: Client;
 
 	/**
-	 * @name mongodbURI
-	 * @description The mongodb database URI for the bot.
+	 * @name mongodbURL
+	 * @description The mongodb database username for the bot.
 	 * @public
 	 */
-	mongodbURI: string;
+	mongodbURL: string;
 
 	/**
 	 * @name token

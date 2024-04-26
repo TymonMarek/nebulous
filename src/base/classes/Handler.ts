@@ -22,13 +22,13 @@ export default class Handler implements IHandler {
 
 		if (!command) {
 			interaction.reply({ content: "This command doesn't exist!", ephemeral: true });
-			this.bot.logger.Warn(`A user tried to use ${interaction.commandName} but it doesn't exist!`);
+			this.bot.logger.warn(`A user tried to use ${interaction.commandName} but it doesn't exist!`);
 			return;
 		}
 
 		if (interaction.guild && !command.contexts.includes(Contexts.Guild)) {
 			interaction.reply({ content: "This command can't be used in a guild!", ephemeral: true });
-			this.bot.logger.Warn(
+			this.bot.logger.warn(
 				`A user tried to use ${interaction.commandName} in a guild but it can't be used in a guild!`
 			);
 			return;
@@ -36,7 +36,7 @@ export default class Handler implements IHandler {
 
 		if (!interaction.guild && !command.contexts.includes(Contexts.DirectMessage)) {
 			interaction.reply({ content: "This command can't be used in a DM!", ephemeral: true });
-			this.bot.logger.Warn(
+			this.bot.logger.warn(
 				`A user tried to use ${interaction.commandName} in a DM but it can't be used in a DM!`
 			);
 			return;
@@ -85,13 +85,13 @@ export default class Handler implements IHandler {
 			interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
 
 			if (error instanceof Error) {
-				this.bot.logger.Error(error);
+				this.bot.logger.error(error);
 			} else {
-				this.bot.logger.Error(new Error(String(error)));
+				this.bot.logger.error(new Error(String(error)));
 			}
 		}
 
-		this.bot.logger.Debug(`${interaction.user.tag} executed ${interaction.commandName}`);
+		this.bot.logger.debug(`${interaction.user.tag} executed ${interaction.commandName}`);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -107,7 +107,7 @@ export default class Handler implements IHandler {
 			command.Autocomplete(interaction);
 		}
 
-		this.bot.logger.Debug(`${interaction.user.tag} autocompleted ${interaction.commandName}`);
+		this.bot.logger.debug(`${interaction.user.tag} autocompleted ${interaction.commandName}`);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -13,7 +13,7 @@ export default class GuildCreate extends Event {
 	}
 
 	public async Execute(guild: Guild): Promise<void> {
-		this.bot.logger.Debug(`Joined guild ${guild.name} (${guild.id})`);
+		this.bot.logger.debug(`Joined guild ${guild.name} (${guild.id})`);
 
 		if (await this.bot.database.guilds.exists({ id: guild.id })) return; // If the guild already exists in the database, return.
 

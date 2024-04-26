@@ -19,14 +19,14 @@ export default class Registrar implements IRegistrar {
 				data.push(await command.toJSON()); // Push command data to the array
 			}
 
-			this.bot.logger.Debug(`Started refreshing ${data.length} application (/) commands.`);
+			this.bot.logger.debug(`Started refreshing ${data.length} application (/) commands.`);
 
 			const rest = new REST().setToken(this.bot.token); // Create a new REST client
 			await rest.put(Routes.applicationCommands(this.bot.client.user!.id), { body: data }); // Register commands
 
-			this.bot.logger.Info(`Successfully reloaded ${data.length} application (/) commands.`);
+			this.bot.logger.info(`Successfully reloaded ${data.length} application (/) commands.`);
 		} catch (error) {
-			this.bot.logger.Error(new Error(`Failed to register commands: ${error}`));
+			this.bot.logger.error(new Error(`Failed to register commands: ${error}`));
 		}
 	}
 }

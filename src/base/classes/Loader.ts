@@ -16,23 +16,23 @@ export default class Loader implements ILoader {
 	async LoadEvents(): Promise<void> {
 		const files = (await glob(`${path.join(__dirname, "../../events")}/**/*.js`)).map((file) => path.resolve(file));
 
-		this.bot.logger.Debug("Loading events...");
+		this.bot.logger.debug("Loading events...");
 
 		const eventLoader = files.map(async (file) => {
 			const event: Event = new (await import(file)).default(this.bot);
 
 			if (!event.name) {
-				this.bot.logger.Warn(`${file} failed to load due to missing name!`);
+				this.bot.logger.warn(`${file} failed to load due to missing name!`);
 				return delete require.cache[require.resolve(file)];
 			}
 
 			if (!event.enabled) {
-				this.bot.logger.Warn(`${file} failed to load due to being disabled!`);
+				this.bot.logger.warn(`${file} failed to load due to being disabled!`);
 				return delete require.cache[require.resolve(file)];
 			}
 
 			try {
-				this.bot.logger.Debug(`Loading event ${event.name}`);
+				this.bot.logger.debug(`Loading event ${event.name}`);
 
 				if (event.once) {
 					// @ts-expect-error This correctly passes the arguments to the event
@@ -42,15 +42,15 @@ export default class Loader implements ILoader {
 					this.bot.client.on(event.name, (...args) => event.Execute(...args));
 				}
 			} catch (error) {
-				this.bot.logger.Error(new Error(`Event ${file} failed to load: ${error}`));
+				this.bot.logger.error(new Error(`Event ${file} failed to load: ${error}`));
 			}
 
-			this.bot.logger.Debug(`Event ${event.name} loaded!`);
+			this.bot.logger.debug(`Event ${event.name} loaded!`);
 			return delete require.cache[require.resolve(file)];
 		});
 
 		await Promise.all(eventLoader);
-		this.bot.logger.Info("Events loaded!");
+		this.bot.logger.info("Events loaded!");
 	}
 
 	async LoadCommands(): Promise<void> {
@@ -58,23 +58,23 @@ export default class Loader implements ILoader {
 			path.resolve(file)
 		);
 
-		this.bot.logger.Debug("Loading commands...");
+		this.bot.logger.debug("Loading commands...");
 
 		const commandLoader = files.map(async (file) => {
 			const command: Command | SubCommand = new (await import(file)).default(this.bot);
 
 			if (!command.name) {
-				this.bot.logger.Warn(`${file} failed to load due to missing name!`);
+				this.bot.logger.warn(`${file} failed to load due to missing name!`);
 				return delete require.cache[require.resolve(file)];
 			}
 
 			if (!command.enabled) {
-				this.bot.logger.Warn(`${file} failed to load due to being disabled!`);
+				this.bot.logger.warn(`${file} failed to load due to being disabled!`);
 				return delete require.cache[require.resolve(file)];
 			}
 
 			try {
-				this.bot.logger.Debug(`Loading command ${command.name}`);
+				this.bot.logger.debug(`Loading command ${command.name}`);
 
 				if (command instanceof Command) {
 					this.bot.commands.set(command.name, command);
@@ -82,14 +82,14 @@ export default class Loader implements ILoader {
 					this.bot.subCommands.set(command.name, command);
 				}
 			} catch (error) {
-				this.bot.logger.Error(new Error(`Command ${file} failed to load: ${error}`));
+				this.bot.logger.error(new Error(`Command ${file} failed to load: ${error}`));
 			}
 
-			this.bot.logger.Debug(`Command ${command.name} loaded!`);
+			this.bot.logger.debug(`Command ${command.name} loaded!`);
 			return delete require.cache[require.resolve(file)];
 		});
 
 		await Promise.all(commandLoader);
-		this.bot.logger.Info("Commands loaded!");
+		this.bot.logger.info("Commands loaded!");
 	}
 }
