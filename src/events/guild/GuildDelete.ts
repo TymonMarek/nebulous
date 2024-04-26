@@ -13,7 +13,7 @@ export default class GuildDelete extends Event {
 	}
 
 	public async Execute(guild: Guild): Promise<void> {
-		this.bot.logger.Debug(`Left guild ${guild.name} (${guild.id})`);
+		this.bot.logger.debug(`Left guild ${guild.name} (${guild.id})`);
 
 		if (!(await this.bot.database.guilds.exists({ id: guild.id }))) return; // If the guild doesn't exist in the database, return.
 

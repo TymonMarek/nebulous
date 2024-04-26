@@ -13,7 +13,7 @@ export default class InteractionCreate extends Event {
 	}
 
 	async Execute(interaction: Interaction) {
-		this.bot.logger.Debug(
+		this.bot.logger.debug(
 			`new Interaction { 
 				id: ${interaction.id}, 
 				type: ${interaction.type}, 
@@ -43,9 +43,9 @@ export default class InteractionCreate extends Event {
 					break;
 			}
 		} catch (error) {
-			return this.bot.logger.Error(new Error(`Interaction ${interaction.id} failed to process: ${error}`));
+			return this.bot.logger.error(new Error(`Interaction ${interaction.id} failed to process: ${error}`));
 		}
 
-		this.bot.logger.Debug(`Interaction ${interaction.id} processed successfully!`);
+		this.bot.logger.debug(`Interaction ${interaction.id} processed successfully!`);
 	}
 }

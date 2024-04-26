@@ -41,17 +41,17 @@ export default class Bot implements IBot {
 
 		if (dotenv.config().error) {
 			// Load the .env file and check for errors
-			this.logger.Error(new Error("No .env file found, please create a .env file with the required fields."));
+			this.logger.error(new Error("No .env file found, please create a .env file with the required fields."));
 		}
 
 		if (!process.env.DISCORD_TOKEN) {
 			// Check if the token is provided
-			this.logger.Error(new Error("No token provided, please provide a DISCORD_TOKEN in the .env file."));
+			this.logger.error(new Error("No token provided, please provide a DISCORD_TOKEN in the .env file."));
 		}
 
 		if (!process.env.MONGODB_URL) {
 			// Check if the mongodb username is provided
-			this.logger.Error(new Error("No MongoDB URL provided, please provide a MONGODB_URL in the .env file."));
+			this.logger.error(new Error("No MongoDB URL provided, please provide a MONGODB_URL in the .env file."));
 		}
 
 		this.mongodbURL = process.env.MONGODB_URL!;
@@ -75,7 +75,7 @@ export default class Bot implements IBot {
 	}
 
 	async Initialize(): Promise<void> {
-		this.logger.Debug("Bot is starting..."); // Log that the bot is starting
+		this.logger.debug("Bot is starting..."); // Log that the bot is starting
 
 		await this.database.Connect(); // Connect to the database
 		await this.loader.LoadEvents(); // Load the events
@@ -84,10 +84,10 @@ export default class Bot implements IBot {
 		try {
 			await this.client.login(this.token); // Login to the client.
 		} catch (error) {
-			this.logger.Error(error); // Log if there is an error
+			this.logger.error(error); // Log if there is an error
 		}
 
-		this.logger.Info("Bot loaded!"); // Log that the bot is loaded
+		this.logger.info("Bot loaded!"); // Log that the bot is loaded
 	}
 
 	ParseProcessArgs(): IProcessArgs {

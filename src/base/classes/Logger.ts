@@ -12,28 +12,32 @@ export default class Logger implements ILogger {
 		this.bot = bot;
 	}
 
-	async Info(message: string): Promise<void> {
+	async info(message: string): Promise<void> {
 		const text = `[${Type.Info}] ${message}`;
-		this.Save(text);
+		this.save(text);
 		console.log(blue(message));
 	}
 
-	async Warn(message: string): Promise<void> {
+	async warn(message: string): Promise<void> {
 		const text = `[${Type.Warn}] ${message}`;
-		this.Save(text);
+		this.save(text);
 		console.warn(yellow(message));
 	}
 
-	async Error(err: Error): Promise<never> {
+	async error(err: Error | unknown): Promise<never | undefined | void> {
+		if (!(err instanceof Error)) {
+			return this.warn("An error was reported, but it was not an instance of Error: " + err);
+		}
+
 		const text = `[${Type.Error}] ${err.name} - ${err.message}\n${err.stack}`;
 		console.error(red(`${err.name}\n${err.message}\n${err.stack}`));
-		this.Save(text);
-		throw err;
+		this.save(text);
+		process.exit(1);
 	}
 
-	async Debug(message: string): Promise<void> {
+	async debug(message: string): Promise<void> {
 		const text = `[${Type.Debug}] ${message}`;
-		this.Save(text);
+		this.save(text);
 
 		if (!this.bot.args.verbose) return;
 		console.debug(gray(message));
@@ -43,7 +47,7 @@ export default class Logger implements ILogger {
 	 * @name Initialize
 	 * @description Initializes the logger.
 	 */
-	async Initialize(): Promise<void> {
+	async initialize(): Promise<void> {
 		console.log("Initializing logger...");
 
 		if (!existsSync(`${process.cwd()}/logs`)) {
@@ -57,7 +61,7 @@ export default class Logger implements ILogger {
 		}
 
 		if (existsSync(`${process.cwd()}/logs/latest.txt`)) {
-			await this.Compress(`${process.cwd()}/logs/latest.txt`);
+			await this.compress(`${process.cwd()}/logs/latest.txt`);
 		}
 
 		console.log("Creating log file...");
@@ -68,11 +72,11 @@ export default class Logger implements ILogger {
 			console.error("Failed to create log file: ", err);
 		}
 
-		this.Info("Logger initialized.");
+		this.info("Logger initialized.");
 
 		if (this.bot.args.verbose) {
-			this.Warn("Launched in verbose mode, this will log more information than usual.");
-			this.Warn("This mode is not recommended for production use!");
+			this.warn("Launched in verbose mode, this will log more information than usual.");
+			this.warn("This mode is not recommended for production use!");
 		}
 	}
 
@@ -82,7 +86,9 @@ export default class Logger implements ILogger {
 	 * @param text The text to save.
 	 * @private
 	 */
-	private async Save(text: string): Promise<void> {
+	private async save(text: string): Promise<void> {
+		if (!existsSync(`${process.cwd()}/logs/latest.txt`)) return;
+
 		try {
 			appendFileSync(`${process.cwd()}/logs/latest.txt`, text + "\n");
 		} catch (err) {
@@ -95,7 +101,7 @@ export default class Logger implements ILogger {
 	 * @description Compresses the file.
 	 * @private
 	 */
-	private async Compress(file: string): Promise<void> {
+	private async compress(file: string): Promise<void> {
 		console.log("Compressing file...");
 
 		try {

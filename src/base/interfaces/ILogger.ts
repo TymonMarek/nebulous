@@ -9,31 +9,31 @@ export default interface ILogger {
 	bot: Bot;
 
 	/**
-	 * @name Info
+	 * @name info
 	 * @description Logs an info message to the console and log file.
 	 * @param message
 	 */
-	Info(message: string): Promise<void>;
+	info(message: string): Promise<void>;
 
 	/**
-	 * @name Warn
+	 * @name warn
 	 * @description Logs a warning message to the console and log file.
 	 * @param message
 	 */
-	Warn(message: string): Promise<void>;
+	warn(message: string): Promise<void>;
 
 	/**
-	 * @name Error
+	 * @name error
 	 * @description Logs an error message to the console and log file, then throws that error.
 	 * @param err
-	 * @never
+	 * @never @undefined @void
 	 */
-	Error(err: Error): Promise<never>;
+	error(err: Error | unknown): Promise<never | undefined | void>;
 
 	/**
-	 * @name Debug
+	 * @name debug
 	 * @description Logs a debug message to the console and log file.
 	 * @param message
 	 */
-	Debug(message: string): Promise<void>;
+	debug(message: string): Promise<void>;
 }

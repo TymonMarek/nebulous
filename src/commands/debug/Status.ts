@@ -24,16 +24,12 @@ export default class Status extends Command {
 	async Execute(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply({ ephemeral: true });
 
-		const guildCount = this.bot.client.guilds.cache.size;
-		const userCount = this.bot.client.users.cache.size;
-		const channelCount = this.bot.client.channels.cache.size;
-
 		const system = process.platform;
 		const ping = Date.now() - interaction.createdTimestamp;
 		const uptime = this.bot.formatter.formatMilliseconds(this.bot.client.uptime ?? 0);
 
 		const cpu = process.cpuUsage().system / 1024 / 1024;
-		const cpuUsage = `${Math.round(cpu * 100) / 100}MB`;
+		const cpuUsage = `${Math.round(cpu * 100) / 100}%`;
 
 		const memory = process.memoryUsage().heapUsed / 1024 / 1024;
 		const memoryUsage = `${Math.round(memory * 100) / 100}MB`;
@@ -44,48 +40,32 @@ export default class Status extends Command {
 			.addFields(
 				{
 					name: "OS",
-					value: system
+					value: system,
+					inline: true
 				},
 				{
 					name: "Uptime",
-					value: uptime
-				}
-			)
-			.addFields(
+					value: uptime,
+					inline: true
+				},
 				{
 					name: "CPU",
-					value: cpuUsage
+					value: cpuUsage,
+					inline: true
 				},
 				{
 					name: "RAM",
-					value: memoryUsage
-				}
-			)
-			.setTimestamp();
-
-		const botEmbed = new EmbedBuilder()
-			.setTitle("Bot")
-			.setColor(Colors.Grey)
-			.addFields(
-				{
-					name: "Guilds",
-					value: `${guildCount}`
-				},
-				{
-					name: "Users",
-					value: `${userCount}`
-				},
-				{
-					name: "Channels",
-					value: `${channelCount}`
+					value: memoryUsage,
+					inline: true
 				},
 				{
 					name: "Ping",
-					value: `${ping}ms`
+					value: `${ping}ms`,
+					inline: true
 				}
 			)
 			.setTimestamp();
 
-		await interaction.editReply({ embeds: [systemEmbed, botEmbed] });
+		await interaction.editReply({ embeds: [systemEmbed] });
 	}
 }
