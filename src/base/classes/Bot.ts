@@ -36,7 +36,7 @@ export default class Bot implements IBot {
 
 	public constructor() {
 		this.logger = new Logger(this);
-		
+
 		this.client = new Client({ intents: [] });
 
 		if (dotenv.config().error) {
