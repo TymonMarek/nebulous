@@ -1,8 +1,8 @@
-import { ChatInputCommandInteraction, PermissionFlagsBits } from "discord.js";
-import { CommandCategory } from "../../base/enums/CommandCategory";
-import { CommandContexts } from "../../base/enums/CommandContexts";
-import Command from "../../base/classes/Command";
-import Bot from "../../base/classes/Bot";
+import { PermissionFlagsBits, ChatInputCommandInteraction } from "discord.js";
+import { CommandCategory } from "../../base/enums/commands/CommandCategory";
+import { CommandContexts } from "../../base/enums/commands/CommandContexts";
+import Command from "../../base/classes/commands/Command";
+import Bot from "../../base/classes/core/Bot";
 
 export default class Ping extends Command {
 	constructor(bot: Bot) {

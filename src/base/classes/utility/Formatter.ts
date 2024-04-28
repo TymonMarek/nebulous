@@ -1,4 +1,4 @@
-import IFormatter from "../interfaces/IFormatter";
+import IFormatter from "../../interfaces/utility/IFormatter";
 
 export default class Formatter implements IFormatter {
 	formatMilliseconds(milliseconds: number): string {

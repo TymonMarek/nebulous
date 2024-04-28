@@ -1,7 +1,7 @@
 import { Events } from "discord.js";
-import IEvent from "../interfaces/IEvent";
-import Bot from "./Bot";
-import IEventOptions from "../interfaces/IEventOptions";
+import IEvent from "../../interfaces/events/IEvent";
+import IEventOptions from "../../interfaces/events/IEventOptions";
+import Bot from "../core/Bot";
 
 export default class Event implements IEvent {
 	bot: Bot;

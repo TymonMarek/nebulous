@@ -1,4 +1,4 @@
-import Bot from "../classes/Bot";
+import Bot from "../../classes/core/Bot";
 
 export default interface ILogger {
 	/**

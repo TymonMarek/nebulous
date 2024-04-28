@@ -1,5 +1,5 @@
-import { CommandCategory } from "../enums/CommandCategory";
-import { CommandContexts } from "../enums/CommandContexts";
+import { CommandCategory } from "../../enums/commands/CommandCategory";
+import { CommandContexts } from "../../enums/commands/CommandContexts";
 
 export default interface ICommandOptions {
 	/**

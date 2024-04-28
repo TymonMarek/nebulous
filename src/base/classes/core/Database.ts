@@ -1,9 +1,9 @@
-import IDatabase from "../interfaces/IDatabase";
+import IDatabase from "../../interfaces/core/IDatabase";
+import { SGuild } from "../../schemas/SGuild";
+import { SUser } from "../../schemas/SUser";
 import mongoose, { Model } from "mongoose";
-import { SGuild } from "../schemas/SGuild";
-import { SUser } from "../schemas/SUser";
-import MGuilds from "../models/MGuilds";
-import MUsers from "../models/MUsers";
+import MGuilds from "../../models/MGuilds";
+import MUsers from "../../models/MUsers";
 import { existsSync } from "fs";
 import Bot from "./Bot";
 

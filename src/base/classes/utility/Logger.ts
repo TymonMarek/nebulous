@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, writeFileSync, appendFileSync } from "fs";
+import { LogMessageType } from "../../enums/utility/LogMessageType";
+import ILogger from "../../interfaces/utility/ILogger";
 import { blue, yellow, red, gray } from "chalk";
-import ILogger from "../interfaces/ILogger";
-import { LogMessageType } from "../enums/LogMessageType";
 import { gzip } from "compressing";
-import Bot from "./Bot";
+import Bot from "../core/Bot";
 
 export default class Logger implements ILogger {
 	bot: Bot;

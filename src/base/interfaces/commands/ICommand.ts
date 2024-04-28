@@ -1,7 +1,7 @@
-import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
-import { CommandCategory } from "../enums/CommandCategory";
-import { CommandContexts } from "../enums/CommandContexts";
-import Bot from "../classes/Bot";
+import { ChatInputCommandInteraction, AutocompleteInteraction } from "discord.js";
+import { CommandCategory } from "../../enums/commands/CommandCategory";
+import { CommandContexts } from "../../enums/commands/CommandContexts";
+import Bot from "../../classes/core/Bot";
 
 export default interface ICommand {
 	readonly bot: Bot;

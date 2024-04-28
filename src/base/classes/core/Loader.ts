@@ -1,10 +1,10 @@
-import ILoader from "../interfaces/ILoader";
-import SubCommand from "./SubCommand";
-import Event from "../classes/Event";
-import Command from "./Command";
+import ILoader from "../../interfaces/core/ILoader";
+import SubCommand from "../commands/SubCommand";
+import Command from "../commands/Command";
+import Event from "../events/Event";
 import { glob } from "glob";
-import path from "path";
 import Bot from "./Bot";
+import path from "path";
 
 export default class Loader implements ILoader {
 	bot: Bot;
@@ -14,9 +14,14 @@ export default class Loader implements ILoader {
 	}
 
 	async loadEvents(): Promise<void> {
-		const files = (await glob(`${path.join(__dirname, "../../events")}/**/*.js`)).map((file) => path.resolve(file));
-
 		this.bot.logger.debug("Loading events...");
+
+		const files = (await glob(`${path.join(__dirname, "../../../events")}/**/*.js`)).map((file) =>
+			path.resolve(file)
+		);
+
+		if (!files.length) return this.bot.logger.warn("No events found!");
+		this.bot.logger.debug(`Found ${files.length} events...`);
 
 		const eventLoader = files.map(async (file) => {
 			const event: Event = new (await import(file)).default(this.bot);
@@ -50,15 +55,18 @@ export default class Loader implements ILoader {
 		});
 
 		await Promise.all(eventLoader);
-		this.bot.logger.info("Events loaded!");
+		this.bot.logger.info("Events hooked!");
 	}
 
 	async loadCommands(): Promise<void> {
-		const files = (await glob(`${path.join(__dirname, "../../commands")}/**/*.js`)).map((file) =>
+		this.bot.logger.debug("Loading commands...");
+
+		const files = (await glob(`${path.join(__dirname, "../../../commands")}/**/*.js`)).map((file) =>
 			path.resolve(file)
 		);
 
-		this.bot.logger.debug("Loading commands...");
+		if (!files.length) return this.bot.logger.warn("No commands found!");
+		this.bot.logger.debug(`Found ${files.length} commands...`);
 
 		const commandLoader = files.map(async (file) => {
 			const command: Command | SubCommand = new (await import(file)).default(this.bot);
@@ -85,7 +93,7 @@ export default class Loader implements ILoader {
 				this.bot.logger.error(new Error(`Command ${file} failed to load: ${error}`));
 			}
 
-			this.bot.logger.debug(`Command ${command.name} loaded!`);
+			this.bot.logger.debug(`Command ${command.name} loaded successfully!`);
 			return delete require.cache[require.resolve(file)];
 		});
 

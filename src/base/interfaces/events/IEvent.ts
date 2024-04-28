@@ -1,5 +1,5 @@
+import Bot from "../../classes/core/Bot";
 import { Events } from "discord.js";
-import Bot from "../classes/Bot";
 
 export default interface IEvent {
 	/**

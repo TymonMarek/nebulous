@@ -1,6 +1,6 @@
+import Event from "../../base/classes/events/Event";
+import Bot from "../../base/classes/core/Bot";
 import { Events, Guild } from "discord.js";
-import Bot from "../../base/classes/Bot";
-import Event from "../../base/classes/Event";
 
 export default class GuildDelete extends Event {
 	constructor(bot: Bot) {
