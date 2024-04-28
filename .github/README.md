@@ -142,7 +142,7 @@
   <p>14. Select the "Read and write to any database" built-in role.</p>
   <p>15. Click "Add user".</p>
   <p>16. Copy the certificate you just downloaded</p>
-  <p>17. Create a new folder in the root directory of the project called <code>cert</code> and paste the certificate in there. (Make sure to rename it to <code>mongodb.pem</code> !!!)</p>
+  <p>17. Create a new folder in the root directory of the project called <code>certs</code> and paste the certificate in there. (Make sure to rename it to <code>mongodb.pem</code> !!!)</p>
 </details>
 
 <h2>
