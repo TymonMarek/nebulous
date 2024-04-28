@@ -1,10 +1,10 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
-import ICommandOptions from "../interfaces/ICommandOptions";
-import { CommandCategory } from "../enums/CommandCategory";
-import { CommandContexts } from "../enums/CommandContexts";
-import ICommand from "../interfaces/ICommand";
-import Bot from "./Bot";
-import IAPICommand from "../interfaces/IAPICommand";
+import ICommandOptions from "../../interfaces/commands/ICommandOptions";
+import { CommandCategory } from "../../enums/commands/CommandCategory";
+import { CommandContexts } from "../../enums/commands/CommandContexts";
+import IAPICommand from "../../interfaces/commands/IAPICommand";
+import ICommand from "../../interfaces/commands/ICommand";
+import Bot from "../core/Bot";
 
 export default class Command implements ICommand {
 	readonly bot: Bot;

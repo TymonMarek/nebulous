@@ -1,10 +1,10 @@
 import {
-	AutocompleteInteraction,
 	ChatInputCommandInteraction,
+	AutocompleteInteraction,
 	MessageComponentInteraction,
 	ModalSubmitInteraction
 } from "discord.js";
-import Bot from "../classes/Bot";
+import Bot from "../../classes/core/Bot";
 
 export default interface IHandler {
 	/**

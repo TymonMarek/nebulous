@@ -1,7 +1,7 @@
-import { SGuild } from "../schemas/SGuild";
-import { SUser } from "../schemas/SUser";
+import { SGuild } from "../../schemas/SGuild";
+import { SUser } from "../../schemas/SUser";
+import Bot from "../../classes/core/Bot";
 import { Model } from "mongoose";
-import Bot from "../classes/Bot";
 
 export default interface IDatabase {
 	/**

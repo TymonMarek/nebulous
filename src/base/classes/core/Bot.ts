@@ -1,14 +1,14 @@
-import IProcessArgs from "../interfaces/IProcessArgs";
+import IProcessArgs from "../../interfaces/misc/IProcessArgs";
+import SubCommand from "../commands/SubCommand";
 import { Client, Collection } from "discord.js";
-import IBot from "../interfaces/IBot";
-import SubCommand from "./SubCommand";
-import Formatter from "./Formatter";
+import IBot from "../../interfaces/core/IBot";
+import Formatter from "../utility/Formatter";
+import Command from "../commands/Command";
+import Logger from "../utility/Logger";
 import Registrar from "./Registrar";
 import Database from "./Database";
-import Command from "./Command";
 import Handler from "./Handler";
 import Loader from "./Loader";
-import Logger from "./Logger";
 import dotenv from "dotenv";
 
 export default class Bot implements IBot {
@@ -82,7 +82,9 @@ export default class Bot implements IBot {
 		await this.loader.loadCommands(); // Load the commands
 
 		try {
+			this.logger.debug("Logging in..."); // Log that the bot is logging in
 			await this.client.login(this.token); // Login to the client.
+			this.logger.debug("Logged in!"); // Log that the bot is logged in
 		} catch (error) {
 			this.logger.error(error); // Log if there is an error
 		}
