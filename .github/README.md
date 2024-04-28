@@ -108,16 +108,25 @@
 
 <details>
   <summary>How to get a Discord Bot token (5 minutes)</summary>
+	<br>
   <p>1. Go to the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>.</p>
   <p>2. Click on "New Application" in the top right corner.</p>
   <p>3. Enter a name for your bot and click "Create".</p>
   <p>4. Go to the "Bot" tab on the left sidebar and click "Add Bot".</p>
   <p>5. Click "Copy" under "Token" to copy your bot's token.</p>
   <p>6. Paste the token into your <code>.env</code> file as <code>DISCORD_TOKEN=your_discord_bot_token_here</code>.</p>
+  <p>7. Click "OAuth2" on the left sidebar.</p>	
+  <p>8. Under "OAuth2 URL Generator", select "bot" and "applications.commands".</p>
+  <p>9. Click "Copy" and paste the URL into your browser.</p>
+  <p>10. Select a server to add the bot to and click "Authorize bot".</p>
+  <p>11. Complete the CAPTCHA and click "Authorize".</p>
+  <p>12. Your bot should now be in the server you selected.</p>
+
 </details>
 
 <details>
   <summary>How to get a MongoDB URL (15 minutes)</summary>
+	<br>
   <p>1. Go to the <a href="https://cloud.mongodb.com/">MongoDB Cloud</a>.</p>
   <p>2. Sign in or create an account if you don't have one.</p>
   <p>3. Click on "Create deployment".</p>
