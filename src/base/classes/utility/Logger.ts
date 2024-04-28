@@ -39,6 +39,7 @@ export default class Logger implements ILogger {
 		const text = `[${LogMessageType.Debug}] ${message}`;
 		this.save(text);
 
+		if (!this.bot.args) return; // If the bot args are not yet initialized, return
 		if (!this.bot.args.verbose) return;
 		console.debug(gray(message));
 	}
@@ -61,6 +62,7 @@ export default class Logger implements ILogger {
 		}
 
 		if (existsSync(`${process.cwd()}/logs/latest.txt`)) {
+			console.log("Compressing old log file...");
 			await this.compress(`${process.cwd()}/logs/latest.txt`);
 		}
 
@@ -108,7 +110,7 @@ export default class Logger implements ILogger {
 			const date = new Date();
 			const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 			const formattedTime = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
-			await gzip.compressFile(file, `${process.cwd()}/logs/${formattedDate}-${formattedTime}.txt.gz`);
+			await gzip.compressFile(file, `${process.cwd()}/logs/${formattedDate}-${formattedTime}.txt.gz`, {});
 		} catch (err) {
 			console.error("Failed to compress file: ", err);
 		}
