@@ -57,7 +57,7 @@ export default class Bot implements IBot {
 		this.mongodbURL = process.env.MONGODB_URL!;
 		this.token = process.env.DISCORD_TOKEN!;
 
-		this.args = this.ParseProcessArgs();
+		this.args = this.parseProcessArgs();
 
 		this.commands = new Collection();
 		this.subCommands = new Collection();
@@ -74,12 +74,12 @@ export default class Bot implements IBot {
 		this.loader = new Loader(this);
 	}
 
-	async Initialize(): Promise<void> {
+	async initialize(): Promise<void> {
 		this.logger.debug("Bot is starting..."); // Log that the bot is starting
 
-		await this.database.Connect(); // Connect to the database
-		await this.loader.LoadEvents(); // Load the events
-		await this.loader.LoadCommands(); // Load the commands
+		await this.database.connect(); // Connect to the database
+		await this.loader.loadEvents(); // Load the events
+		await this.loader.loadCommands(); // Load the commands
 
 		try {
 			await this.client.login(this.token); // Login to the client.
@@ -90,7 +90,7 @@ export default class Bot implements IBot {
 		this.logger.info("Bot loaded!"); // Log that the bot is loaded
 	}
 
-	ParseProcessArgs(): IProcessArgs {
+	parseProcessArgs(): IProcessArgs {
 		const args = process.argv.filter((arg) => arg.startsWith("--"));
 
 		const processArgs: IProcessArgs = {

@@ -10,7 +10,7 @@ export default class Registrar implements IRegistrar {
 		this.bot = bot;
 	}
 
-	async RegisterCommands(): Promise<void> {
+	async registerCommands(): Promise<void> {
 		try {
 			const commands = this.bot.commands.filter((command) => command.enabled); // Filter out disabled commands
 			const data: IAPICommand[] = []; // Array to store command data

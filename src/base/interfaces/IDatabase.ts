@@ -28,16 +28,23 @@ export default interface IDatabase {
 	readonly users: Model<SUser>;
 
 	/**
+	 * @name Initialize
+	 * @description Initializes the database.
+	 * @async
+	 */
+	initialize(): Promise<void>;
+
+	/**
 	 * @name Connect
 	 * @description Connects to the database.
 	 * @async
 	 */
-	Connect(): Promise<void>;
+	connect(): Promise<void>;
 
 	/**
 	 * @name Disconnect
 	 * @description Disconnects from the database.
 	 * @async
 	 */
-	Disconnect(): Promise<void>;
+	disconnect(): Promise<void>;
 }

@@ -15,5 +15,5 @@ export default interface IRegistrar {
 	 * @description Registers the commands to Discord's API.
 	 * @async
 	 */
-	RegisterCommands(): Promise<void>;
+	registerCommands(): Promise<void>;
 }

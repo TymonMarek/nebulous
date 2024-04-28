@@ -106,12 +106,12 @@ export default interface IBot {
 	 * @description Initializes the bot.
 	 * @public
 	 */
-	Initialize(): Promise<void>; // Initialize the bot
+	initialize(): Promise<void>; // Initialize the bot
 
 	/**
 	 * @name ParseProcessArgs
 	 * @description Parses the process arguments.
 	 * @public
 	 */
-	ParseProcessArgs(): IProcessArgs; // Parse the process arguments
+	parseProcessArgs(): IProcessArgs; // Parse the process arguments
 }

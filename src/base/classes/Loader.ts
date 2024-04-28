@@ -13,7 +13,7 @@ export default class Loader implements ILoader {
 		this.bot = bot;
 	}
 
-	async LoadEvents(): Promise<void> {
+	async loadEvents(): Promise<void> {
 		const files = (await glob(`${path.join(__dirname, "../../events")}/**/*.js`)).map((file) => path.resolve(file));
 
 		this.bot.logger.debug("Loading events...");
@@ -53,7 +53,7 @@ export default class Loader implements ILoader {
 		this.bot.logger.info("Events loaded!");
 	}
 
-	async LoadCommands(): Promise<void> {
+	async loadCommands(): Promise<void> {
 		const files = (await glob(`${path.join(__dirname, "../../commands")}/**/*.js`)).map((file) =>
 			path.resolve(file)
 		);

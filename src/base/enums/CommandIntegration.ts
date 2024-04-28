@@ -1,10 +1,10 @@
 /**
- * Enum for Integration Type
+ * Enum for Integration of a command
  * @property Guild integration type (App is installable to servers)
  * @property User integration type (App is installable to users)
  * @enum
  */
-export enum Integration {
+export enum CommandIntegration {
 	/**
 	 * Guild integration type (App is installable to servers)
 	 */

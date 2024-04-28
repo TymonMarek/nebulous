@@ -31,5 +31,5 @@ export default interface ISubcommand {
 	 * @param interaction
 	 * @async
 	 */
-	readonly Execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+	readonly execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 }

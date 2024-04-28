@@ -27,19 +27,19 @@ export default class InteractionCreate extends Event {
 		try {
 			switch (interaction.type) {
 				case InteractionType.ApplicationCommand:
-					this.bot.handler.OnApplicationCommand(interaction as ChatInputCommandInteraction);
+					this.bot.handler.onApplicationCommand(interaction as ChatInputCommandInteraction);
 					break;
 
 				case InteractionType.MessageComponent:
-					this.bot.handler.OnMessageComponent(interaction);
+					this.bot.handler.onMessageComponent(interaction);
 					break;
 
 				case InteractionType.ApplicationCommandAutocomplete:
-					this.bot.handler.OnAutocomplete(interaction);
+					this.bot.handler.onAutocomplete(interaction);
 					break;
 
 				case InteractionType.ModalSubmit:
-					this.bot.handler.OnModalSubmit(interaction);
+					this.bot.handler.onModalSubmit(interaction);
 					break;
 			}
 		} catch (error) {

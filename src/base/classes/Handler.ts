@@ -1,4 +1,4 @@
-import { Contexts } from "../enums/Contexts";
+import { CommandContexts } from "../enums/CommandContexts";
 import IHandler from "../interfaces/IHandler";
 import Bot from "./Bot";
 
@@ -17,7 +17,7 @@ export default class Handler implements IHandler {
 		this.bot = bot;
 	}
 
-	async OnApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void> {
+	async onApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void> {
 		const command = this.bot.commands.get(interaction.commandName);
 
 		if (!command) {
@@ -26,7 +26,7 @@ export default class Handler implements IHandler {
 			return;
 		}
 
-		if (interaction.guild && !command.contexts.includes(Contexts.Guild)) {
+		if (interaction.guild && !command.contexts.includes(CommandContexts.Guild)) {
 			interaction.reply({ content: "This command can't be used in a guild!", ephemeral: true });
 			this.bot.logger.warn(
 				`A user tried to use ${interaction.commandName} in a guild but it can't be used in a guild!`
@@ -34,7 +34,7 @@ export default class Handler implements IHandler {
 			return;
 		}
 
-		if (!interaction.guild && !command.contexts.includes(Contexts.DirectMessage)) {
+		if (!interaction.guild && !command.contexts.includes(CommandContexts.DirectMessage)) {
 			interaction.reply({ content: "This command can't be used in a DM!", ephemeral: true });
 			this.bot.logger.warn(
 				`A user tried to use ${interaction.commandName} in a DM but it can't be used in a DM!`
@@ -80,7 +80,7 @@ export default class Handler implements IHandler {
 		}
 
 		try {
-			await command.Execute(interaction);
+			await command.execute(interaction);
 		} catch (error) {
 			interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
 
@@ -95,23 +95,23 @@ export default class Handler implements IHandler {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	async OnMessageComponent(interaction: MessageComponentInteraction): Promise<void> {
+	async onMessageComponent(interaction: MessageComponentInteraction): Promise<void> {
 		throw new Error("Method not implemented.");
 	}
 
-	async OnAutocomplete(interaction: AutocompleteInteraction): Promise<void> {
+	async onAutocomplete(interaction: AutocompleteInteraction): Promise<void> {
 		const command = this.bot.commands.get(interaction.commandName);
 		if (!command) return;
 
-		if (command.Autocomplete) {
-			command.Autocomplete(interaction);
+		if (command.autocomplete) {
+			command.autocomplete(interaction);
 		}
 
 		this.bot.logger.debug(`${interaction.user.tag} autocompleted ${interaction.commandName}`);
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	async OnModalSubmit(interaction: ModalSubmitInteraction): Promise<void> {
+	async onModalSubmit(interaction: ModalSubmitInteraction): Promise<void> {
 		throw new Error("Method not implemented.");
 	}
 }

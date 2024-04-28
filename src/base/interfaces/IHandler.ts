@@ -22,7 +22,7 @@ export default interface IHandler {
 	 * @param {ChatInputCommandInteraction} interaction The interaction.
 	 * @async
 	 */
-	OnApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void>;
+	onApplicationCommand(interaction: ChatInputCommandInteraction): Promise<void>;
 
 	/**
 	 * @name OnAutocomplete
@@ -30,7 +30,7 @@ export default interface IHandler {
 	 * @param {ChatInputCommandInteraction} interaction The interaction.
 	 * @async
 	 */
-	OnAutocomplete(interaction: AutocompleteInteraction): Promise<void>;
+	onAutocomplete(interaction: AutocompleteInteraction): Promise<void>;
 
 	/**
 	 * @name OnMessageComponent
@@ -38,7 +38,7 @@ export default interface IHandler {
 	 * @param {ChatInputCommandInteraction} interaction The interaction.
 	 * @async
 	 */
-	OnMessageComponent(interaction: MessageComponentInteraction): Promise<void>;
+	onMessageComponent(interaction: MessageComponentInteraction): Promise<void>;
 
 	/**
 	 * @name OnModalSubmit
@@ -46,5 +46,5 @@ export default interface IHandler {
 	 * @param {ChatInputCommandInteraction} interaction The interaction.
 	 * @async
 	 */
-	OnModalSubmit(interaction: ModalSubmitInteraction): Promise<void>;
+	onModalSubmit(interaction: ModalSubmitInteraction): Promise<void>;
 }
