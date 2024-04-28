@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, Colors, EmbedBuilder, PermissionFlagsBits } from "discord.js";
-import { Category } from "../../base/enums/Category";
-import { Contexts } from "../../base/enums/Contexts";
+import { CommandCategory } from "../../base/enums/CommandCategory";
+import { CommandContexts } from "../../base/enums/CommandContexts";
 import Command from "../../base/classes/Command";
 import Bot from "../../base/classes/Bot";
 
@@ -9,14 +9,14 @@ export default class Status extends Command {
 		super(bot, {
 			name: "status",
 			description: "Check the status of the bot.",
-			category: Category.Debug,
+			category: CommandCategory.Debug,
 
 			enabled: true,
 			cooldown: 5,
 			nsfw: false,
 
 			default_member_permission: PermissionFlagsBits.SendMessages,
-			contexts: [Contexts.Guild, Contexts.DirectMessage, Contexts.PriaveChannel],
+			contexts: [CommandContexts.Guild, CommandContexts.DirectMessage, CommandContexts.PriaveChannel],
 			options: []
 		});
 	}

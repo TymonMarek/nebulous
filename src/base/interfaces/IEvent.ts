@@ -51,5 +51,5 @@ export default interface IEvent {
 	 * @param {any[]} args The arguments for the event.
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	Execute(...args: any[]): Promise<void>;
+	execute(...args: any[]): Promise<void>;
 }

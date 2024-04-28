@@ -1,6 +1,6 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
-import { Category } from "../enums/Category";
-import { Contexts } from "../enums/Contexts";
+import { CommandCategory } from "../enums/CommandCategory";
+import { CommandContexts } from "../enums/CommandContexts";
 import Bot from "../classes/Bot";
 
 export default interface ICommand {
@@ -8,14 +8,14 @@ export default interface ICommand {
 
 	readonly name: string;
 	readonly description: string;
-	readonly category: Category;
+	readonly category: CommandCategory;
 
 	readonly enabled: boolean;
 	readonly cooldown: number;
 	readonly nsfw: boolean;
 
 	readonly default_member_permission: bigint;
-	readonly contexts: Contexts[];
+	readonly contexts: CommandContexts[];
 
 	readonly options: object;
 
@@ -26,7 +26,7 @@ export default interface ICommand {
 	 * @readonly
 	 * @async
 	 */
-	readonly Execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
+	readonly execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 
 	/**
 	 * What to do when the command arguments are autocompleted.
@@ -35,5 +35,5 @@ export default interface ICommand {
 	 * @readonly
 	 * @async
 	 */
-	readonly Autocomplete: (interaction: AutocompleteInteraction) => Promise<void>;
+	readonly autocomplete: (interaction: AutocompleteInteraction) => Promise<void>;
 }

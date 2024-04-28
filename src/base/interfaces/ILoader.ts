@@ -16,7 +16,7 @@ export default interface ILoader {
 	 * @public
 	 * @async
 	 */
-	LoadEvents(): Promise<void>;
+	loadEvents(): Promise<void>;
 
 	/**
 	 * @name LoadCommands
@@ -24,5 +24,5 @@ export default interface ILoader {
 	 * @public
 	 * @async
 	 */
-	LoadCommands(): Promise<void>;
+	loadCommands(): Promise<void>;
 }

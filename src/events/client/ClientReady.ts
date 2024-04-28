@@ -15,6 +15,6 @@ export default class ClientReady extends Event {
 
 	async Execute() {
 		this.bot.logger.info(`Client is ready! (Logged in as ${this.bot.client.user?.tag})`);
-		this.bot.registrar.RegisterCommands(); // Register commands to the API
+		this.bot.registrar.registerCommands(); // Register commands to the API
 	}
 }

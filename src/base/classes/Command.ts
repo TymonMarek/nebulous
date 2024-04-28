@@ -1,7 +1,7 @@
 import { AutocompleteInteraction, ChatInputCommandInteraction } from "discord.js";
 import ICommandOptions from "../interfaces/ICommandOptions";
-import { Contexts } from "../enums/Contexts";
-import { Category } from "../enums/Category";
+import { CommandCategory } from "../enums/CommandCategory";
+import { CommandContexts } from "../enums/CommandContexts";
 import ICommand from "../interfaces/ICommand";
 import Bot from "./Bot";
 import IAPICommand from "../interfaces/IAPICommand";
@@ -11,14 +11,14 @@ export default class Command implements ICommand {
 
 	readonly name: string;
 	readonly description: string;
-	readonly category: Category;
+	readonly category: CommandCategory;
 
 	readonly enabled: boolean;
 	readonly cooldown: number;
 	readonly nsfw: boolean;
 
 	readonly default_member_permission: bigint;
-	readonly contexts: Contexts[];
+	readonly contexts: CommandContexts[];
 
 	readonly options: object;
 
@@ -40,12 +40,12 @@ export default class Command implements ICommand {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	async Execute(interaction: ChatInputCommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		throw new Error("Method not implemented.");
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	async Autocomplete(interaction: AutocompleteInteraction) {
+	async autocomplete(interaction: AutocompleteInteraction) {
 		throw new Error("Method not implemented.");
 	}
 

@@ -23,7 +23,7 @@ export default class Event implements IEvent {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-	async Execute(...args: any[]): Promise<void> {
+	async execute(...args: any[]): Promise<void> {
 		throw new Error("Method not implemented.");
 	}
 }

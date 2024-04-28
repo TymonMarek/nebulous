@@ -4,6 +4,7 @@ import { SGuild } from "../schemas/SGuild";
 import { SUser } from "../schemas/SUser";
 import MGuilds from "../models/MGuilds";
 import MUsers from "../models/MUsers";
+import { existsSync } from "fs";
 import Bot from "./Bot";
 
 export default class Database implements IDatabase {
@@ -19,7 +20,16 @@ export default class Database implements IDatabase {
 		this.users = MUsers;
 	}
 
-	async Connect(): Promise<void> {
+	async initialize(): Promise<void> {
+		if (!existsSync(`${process.cwd()}/certs/mongodb.pem`)) {
+			this.bot.logger.warn("MongoDB certificate not found!");
+			this.bot.logger.warn(
+				`Please provide a MongoDB certificate at "${process.cwd()}/certs/" and call it "mongodb.pem"!`
+			);
+		}
+	}
+
+	async connect(): Promise<void> {
 		try {
 			await mongoose.connect(
 				`mongodb+srv://${this.bot.mongodbURL}/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority`,
@@ -36,7 +46,7 @@ export default class Database implements IDatabase {
 		}
 	}
 
-	async Disconnect(): Promise<void> {
+	async disconnect(): Promise<void> {
 		try {
 			await mongoose.disconnect();
 			this.bot.logger.info("Disconnected from MongoDB.");

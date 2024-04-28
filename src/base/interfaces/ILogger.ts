@@ -36,4 +36,10 @@ export default interface ILogger {
 	 * @param message
 	 */
 	debug(message: string): Promise<void>;
+
+	/**
+	 * @name initialize
+	 * @description Initializes the logger.
+	 */
+	initialize(): Promise<void>;
 }

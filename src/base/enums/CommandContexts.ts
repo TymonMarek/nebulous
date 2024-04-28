@@ -6,7 +6,7 @@
  * @readonly
  * @enum
  */
-export enum Contexts {
+export enum CommandContexts {
 	/**
 	 * Interaction can be used within servers
 	 */

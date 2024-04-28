@@ -1,5 +1,5 @@
-import { Category } from "../enums/Category";
-import { Contexts } from "../enums/Contexts";
+import { CommandCategory } from "../enums/CommandCategory";
+import { CommandContexts } from "../enums/CommandContexts";
 
 export default interface ICommandOptions {
 	/**
@@ -15,7 +15,7 @@ export default interface ICommandOptions {
 	/**
 	 * The category of the command.
 	 */
-	category: Category;
+	category: CommandCategory;
 
 	/**
 	 * Whether the command is enabled or not.
@@ -41,7 +41,7 @@ export default interface ICommandOptions {
 	/**
 	 * The contexts the command can be ran in.
 	 */
-	contexts: Contexts[];
+	contexts: CommandContexts[];
 
 	/**
 	 * The options of the command.

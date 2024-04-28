@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync, appendFileSync } from "fs";
 import { blue, yellow, red, gray } from "chalk";
 import ILogger from "../interfaces/ILogger";
-import { Type } from "../enums/Type";
+import { LogMessageType } from "../enums/LogMessageType";
 import { gzip } from "compressing";
 import Bot from "./Bot";
 
@@ -13,13 +13,13 @@ export default class Logger implements ILogger {
 	}
 
 	async info(message: string): Promise<void> {
-		const text = `[${Type.Info}] ${message}`;
+		const text = `[${LogMessageType.Info}] ${message}`;
 		this.save(text);
 		console.log(blue(message));
 	}
 
 	async warn(message: string): Promise<void> {
-		const text = `[${Type.Warn}] ${message}`;
+		const text = `[${LogMessageType.Warn}] ${message}`;
 		this.save(text);
 		console.warn(yellow(message));
 	}
@@ -29,14 +29,14 @@ export default class Logger implements ILogger {
 			return this.warn("An error was reported, but it was not an instance of Error: " + err);
 		}
 
-		const text = `[${Type.Error}] ${err.name} - ${err.message}\n${err.stack}`;
+		const text = `[${LogMessageType.Error}] ${err.name} - ${err.message}\n${err.stack}`;
 		console.error(red(`${err.name}\n${err.message}\n${err.stack}`));
 		this.save(text);
 		process.exit(1);
 	}
 
 	async debug(message: string): Promise<void> {
-		const text = `[${Type.Debug}] ${message}`;
+		const text = `[${LogMessageType.Debug}] ${message}`;
 		this.save(text);
 
 		if (!this.bot.args.verbose) return;
@@ -44,7 +44,7 @@ export default class Logger implements ILogger {
 	}
 
 	/**
-	 * @name Initialize
+	 * @name initialize
 	 * @description Initializes the logger.
 	 */
 	async initialize(): Promise<void> {
@@ -107,7 +107,8 @@ export default class Logger implements ILogger {
 		try {
 			const date = new Date();
 			const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-			await gzip.compressFile(file, `${process.cwd()}/logs/${formattedDate}.txt.gz`);
+			const formattedTime = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
+			await gzip.compressFile(file, `${process.cwd()}/logs/${formattedDate}-${formattedTime}.txt.gz`);
 		} catch (err) {
 			console.error("Failed to compress file: ", err);
 		}
