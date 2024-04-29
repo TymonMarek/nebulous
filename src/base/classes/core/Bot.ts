@@ -77,6 +77,7 @@ export default class Bot implements IBot {
 	async initialize(): Promise<void> {
 		this.logger.debug("Bot is starting..."); // Log that the bot is starting
 
+		await this.logger.initialize(); // Initialize the logger
 		await this.database.connect(); // Connect to the database
 		await this.loader.loadEvents(); // Load the events
 		await this.loader.loadCommands(); // Load the commands
@@ -95,10 +96,13 @@ export default class Bot implements IBot {
 	parseProcessArgs(): IProcessArgs {
 		const args = process.argv.filter((arg) => arg.startsWith("--"));
 
+		this.logger.debug("Parsing process arguments...");
+
 		const processArgs: IProcessArgs = {
 			verbose: args.includes("--verbose")
 		};
 
+		this.logger.debug(`Process arguments: ${JSON.stringify(processArgs)}`);
 		return processArgs;
 	}
 }
