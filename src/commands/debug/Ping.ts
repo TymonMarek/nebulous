@@ -21,7 +21,7 @@ export default class Ping extends Command {
 		});
 	}
 
-	async Execute(interaction: ChatInputCommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply({ ephemeral: true });
 
 		const now = Date.now();

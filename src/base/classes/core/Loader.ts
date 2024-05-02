@@ -19,7 +19,7 @@ export default class Loader implements ILoader {
 
 		const files = (await glob(`${path.join(import.meta.dirname, "../../../events")}/**/*.js`)).map((file) =>
 			path.resolve(file)
-		);			
+		);
 
 		if (!files.length) return this.bot.logger.warn("No events found!");
 		this.bot.logger.debug(`Found ${files.length} events...`);
@@ -61,7 +61,7 @@ export default class Loader implements ILoader {
 
 	async loadCommands(): Promise<void> {
 		this.bot.logger.debug("Loading commands...");
-		
+
 		const files = (await glob(`${path.join(import.meta.dirname, "../../../commands")}/**/*.js`)).map((file) =>
 			path.resolve(file)
 		);
@@ -70,6 +70,8 @@ export default class Loader implements ILoader {
 		this.bot.logger.debug(`Found ${files.length} commands...`);
 
 		const commandLoader = files.map(async (file) => {
+			this.bot.logger.debug(`Found command ${file}`);
+
 			const pathUrl = url.pathToFileURL(file).href;
 			const command: Command | SubCommand = new (await import(pathUrl)).default(this.bot);
 
