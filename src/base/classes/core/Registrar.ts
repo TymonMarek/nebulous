@@ -1,7 +1,7 @@
-import IAPICommand from "../../interfaces/commands/IAPICommand";
-import IRegistrar from "../../interfaces/core/IRegistrar";
+import IAPICommand from "../../interfaces/commands/IAPICommand.js";
+import IRegistrar from "../../interfaces/core/IRegistrar.js";
 import { REST, Routes } from "discord.js";
-import Bot from "./Bot";
+import Bot from "./Bot.js";
 
 export default class Registrar implements IRegistrar {
 	bot: Bot;

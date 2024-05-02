@@ -5,9 +5,9 @@ import {
 	AutocompleteInteraction,
 	ModalSubmitInteraction
 } from "discord.js";
-import { CommandContexts } from "../../enums/commands/CommandContexts";
-import IHandler from "../../interfaces/core/IHandler";
-import Bot from "./Bot";
+import { CommandContexts } from "../../enums/commands/CommandContexts.js";
+import IHandler from "../../interfaces/core/IHandler.js";
+import Bot from "./Bot.js";
 
 export default class Handler implements IHandler {
 	bot: Bot;

@@ -1,14 +1,14 @@
-import IProcessArgs from "../../interfaces/misc/IProcessArgs";
-import SubCommand from "../commands/SubCommand";
+import IProcessArgs from "../../interfaces/misc/IProcessArgs.js";
+import SubCommand from "../commands/SubCommand.js";
 import { Client, Collection } from "discord.js";
-import IBot from "../../interfaces/core/IBot";
-import Formatter from "../utility/Formatter";
-import Command from "../commands/Command";
-import Logger from "../utility/Logger";
-import Registrar from "./Registrar";
-import Database from "./Database";
-import Handler from "./Handler";
-import Loader from "./Loader";
+import IBot from "../../interfaces/core/IBot.js";
+import Formatter from "../utility/Formatter.js";
+import Command from "../commands/Command.js";
+import Logger from "../utility/Logger.js";
+import Registrar from "./Registrar.js";
+import Database from "./Database.js";
+import Handler from "./Handler.js";
+import Loader from "./Loader.js";
 import dotenv from "dotenv";
 
 export default class Bot implements IBot {

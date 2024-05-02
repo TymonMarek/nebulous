@@ -1,8 +1,8 @@
 import { PermissionFlagsBits, ChatInputCommandInteraction } from "discord.js";
-import { CommandCategory } from "../../base/enums/commands/CommandCategory";
-import { CommandContexts } from "../../base/enums/commands/CommandContexts";
-import Command from "../../base/classes/commands/Command";
-import Bot from "../../base/classes/core/Bot";
+import { CommandCategory } from "../../base/enums/commands/CommandCategory.js";
+import { CommandContexts } from "../../base/enums/commands/CommandContexts.js";
+import Command from "../../base/classes/commands/Command.js";
+import Bot from "../../base/classes/core/Bot.js";
 
 export default class Ping extends Command {
 	constructor(bot: Bot) {
@@ -21,7 +21,7 @@ export default class Ping extends Command {
 		});
 	}
 
-	async Execute(interaction: ChatInputCommandInteraction) {
+	async execute(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply({ ephemeral: true });
 
 		const now = Date.now();

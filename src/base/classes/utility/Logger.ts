@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, writeFileSync, appendFileSync } from "fs";
-import { LogMessageType } from "../../enums/utility/LogMessageType";
-import ILogger from "../../interfaces/utility/ILogger";
-import { blue, yellow, red, gray } from "chalk";
+import { LogMessageType } from "../../enums/utility/LogMessageType.js";
+import ILogger from "../../interfaces/utility/ILogger.js";
 import { gzip } from "compressing";
-import Bot from "../core/Bot";
+import Bot from "../core/Bot.js";
+import chalk from "chalk";
 
 export default class Logger implements ILogger {
 	bot: Bot;
@@ -15,13 +15,13 @@ export default class Logger implements ILogger {
 	async info(message: string): Promise<void> {
 		const text = `[${LogMessageType.Info}] ${message}`;
 		this.save(text);
-		console.log(blue(message));
+		console.log(chalk.blue(message));
 	}
 
 	async warn(message: string): Promise<void> {
 		const text = `[${LogMessageType.Warn}] ${message}`;
 		this.save(text);
-		console.warn(yellow(message));
+		console.warn(chalk.yellow(message));
 	}
 
 	async error(err: Error | unknown): Promise<never | undefined | void> {
@@ -30,7 +30,7 @@ export default class Logger implements ILogger {
 		}
 
 		const text = `[${LogMessageType.Error}] ${err.name} - ${err.message}\n${err.stack}`;
-		console.error(red(`${err.name}\n${err.message}\n${err.stack}`));
+		console.error(chalk.red(`${err.name}\n${err.message}\n${err.stack}`));
 		this.save(text);
 		process.exit(1);
 	}
@@ -41,7 +41,7 @@ export default class Logger implements ILogger {
 
 		if (!this.bot.args) return; // If the bot args are not yet initialized, return
 		if (!this.bot.args.verbose) return;
-		console.debug(gray(message));
+		console.debug(chalk.gray(message));
 	}
 
 	/**

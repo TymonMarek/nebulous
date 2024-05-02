@@ -1,10 +1,11 @@
-import ILoader from "../../interfaces/core/ILoader";
-import SubCommand from "../commands/SubCommand";
-import Command from "../commands/Command";
-import Event from "../events/Event";
+import ILoader from "../../interfaces/core/ILoader.js";
+import SubCommand from "../commands/SubCommand.js";
+import Command from "../commands/Command.js";
+import Event from "../events/Event.js";
 import { glob } from "glob";
-import Bot from "./Bot";
+import Bot from "./Bot.js";
 import path from "path";
+import url from "url";
 
 export default class Loader implements ILoader {
 	bot: Bot;
@@ -16,7 +17,7 @@ export default class Loader implements ILoader {
 	async loadEvents(): Promise<void> {
 		this.bot.logger.debug("Loading events...");
 
-		const files = (await glob(`${path.join(__dirname, "../../../events")}/**/*.js`)).map((file) =>
+		const files = (await glob(`${path.join(import.meta.dirname, "../../../events")}/**/*.js`)).map((file) =>
 			path.resolve(file)
 		);
 
@@ -24,16 +25,17 @@ export default class Loader implements ILoader {
 		this.bot.logger.debug(`Found ${files.length} events...`);
 
 		const eventLoader = files.map(async (file) => {
-			const event: Event = new (await import(file)).default(this.bot);
+			this.bot.logger.debug(`Found event ${file}`);
+
+			const pathUrl = url.pathToFileURL(file).href;
+			const event: Event = new (await import(pathUrl)).default(this.bot);
 
 			if (!event.name) {
 				this.bot.logger.warn(`${file} failed to load due to missing name!`);
-				return delete require.cache[require.resolve(file)];
 			}
 
 			if (!event.enabled) {
 				this.bot.logger.warn(`${file} failed to load due to being disabled!`);
-				return delete require.cache[require.resolve(file)];
 			}
 
 			try {
@@ -51,7 +53,6 @@ export default class Loader implements ILoader {
 			}
 
 			this.bot.logger.debug(`Event ${event.name} loaded!`);
-			return delete require.cache[require.resolve(file)];
 		});
 
 		await Promise.all(eventLoader);
@@ -61,7 +62,7 @@ export default class Loader implements ILoader {
 	async loadCommands(): Promise<void> {
 		this.bot.logger.debug("Loading commands...");
 
-		const files = (await glob(`${path.join(__dirname, "../../../commands")}/**/*.js`)).map((file) =>
+		const files = (await glob(`${path.join(import.meta.dirname, "../../../commands")}/**/*.js`)).map((file) =>
 			path.resolve(file)
 		);
 
@@ -69,16 +70,17 @@ export default class Loader implements ILoader {
 		this.bot.logger.debug(`Found ${files.length} commands...`);
 
 		const commandLoader = files.map(async (file) => {
-			const command: Command | SubCommand = new (await import(file)).default(this.bot);
+			this.bot.logger.debug(`Found command ${file}`);
+
+			const pathUrl = url.pathToFileURL(file).href;
+			const command: Command | SubCommand = new (await import(pathUrl)).default(this.bot);
 
 			if (!command.name) {
 				this.bot.logger.warn(`${file} failed to load due to missing name!`);
-				return delete require.cache[require.resolve(file)];
 			}
 
 			if (!command.enabled) {
 				this.bot.logger.warn(`${file} failed to load due to being disabled!`);
-				return delete require.cache[require.resolve(file)];
 			}
 
 			try {
@@ -94,7 +96,6 @@ export default class Loader implements ILoader {
 			}
 
 			this.bot.logger.debug(`Command ${command.name} loaded successfully!`);
-			return delete require.cache[require.resolve(file)];
 		});
 
 		await Promise.all(commandLoader);
