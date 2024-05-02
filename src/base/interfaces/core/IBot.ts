@@ -1,13 +1,13 @@
-import SubCommand from "../../classes/commands/SubCommand";
-import Formatter from "../../classes/utility/Formatter";
-import Command from "../../classes/commands/Command";
-import Registrar from "../../classes/core/Registrar";
-import Database from "../../classes/core/Database";
-import Logger from "../../classes/utility/Logger";
-import Handler from "../../classes/core/Handler";
-import IProcessArgs from "../misc/IProcessArgs";
+import SubCommand from "../../classes/commands/SubCommand.js";
+import Formatter from "../../classes/utility/Formatter.js";
+import Command from "../../classes/commands/Command.js";
+import Registrar from "../../classes/core/Registrar.js";
+import Database from "../../classes/core/Database.js";
+import Logger from "../../classes/utility/Logger.js";
+import Handler from "../../classes/core/Handler.js";
+import IProcessArgs from "../misc/IProcessArgs.js";
 import { Client, Collection } from "discord.js";
-import Loader from "../../classes/core/Loader";
+import Loader from "../../classes/core/Loader.js";
 
 export default interface IBot {
 	/**

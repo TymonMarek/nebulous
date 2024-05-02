@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"description": "A Discord bot made using TypeScript and Discord.JS",
 	"main": "build/index.js",
+	"type": "module",
 	"scripts": {
 		"lint": "eslint . --ext .ts",
 		"lint:fix": "eslint . --ext .ts --fix",
@@ -43,12 +44,13 @@
 		"prettier": "^3.2.5"
 	},
 	"dependencies": {
-		"chalk": "4.1.2",
+		"chalk": "^5.3.0",
 		"compressing": "^1.10.0",
 		"discord.js": "^14.14.1",
 		"dotenv": "^16.4.5",
 		"glob": "^10.3.12",
 		"mongoose": "^8.3.2",
-		"typescript": "^5.4.5"
+		"typescript": "^5.4.5",
+		"url": "^0.11.3"
 	}
 }

@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { SGuild } from "../schemas/SGuild";
+import { SGuild } from "../schemas/SGuild.js";
 
 export default model<SGuild>(
 	"Guilds",

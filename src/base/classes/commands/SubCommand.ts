@@ -1,7 +1,7 @@
-import ISubcommandOptions from "../../interfaces/commands/ISubCommandOptions";
+import ISubcommandOptions from "../../interfaces/commands/ISubCommandOptions.js";
 import { ChatInputCommandInteraction, CacheType } from "discord.js";
-import ISubcommand from "../../interfaces/commands/ISubCommand";
-import Bot from "../core/Bot";
+import ISubcommand from "../../interfaces/commands/ISubCommand.js";
+import Bot from "../core/Bot.js";
 
 export default class SubCommand implements ISubcommand {
 	readonly bot: Bot;

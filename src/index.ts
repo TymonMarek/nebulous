@@ -1,5 +1,5 @@
-import Bot from "./base/classes/core/Bot";
+import Bot from "./base/classes/core/Bot.js";
 
-const bot = new Bot(); // Create a new bot
+const bot = new Bot();
 
-bot.initialize(); // Initialize the bot
+bot.initialize();

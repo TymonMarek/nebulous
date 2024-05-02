@@ -1,5 +1,5 @@
-import Event from "../../base/classes/events/Event";
-import Bot from "../../base/classes/core/Bot";
+import Event from "../../base/classes/events/Event.js";
+import Bot from "../../base/classes/core/Bot.js";
 import { Events, Guild } from "discord.js";
 
 export default class GuildCreate extends Event {

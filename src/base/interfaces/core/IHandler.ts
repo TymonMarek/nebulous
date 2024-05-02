@@ -4,7 +4,7 @@ import {
 	MessageComponentInteraction,
 	ModalSubmitInteraction
 } from "discord.js";
-import Bot from "../../classes/core/Bot";
+import Bot from "../../classes/core/Bot.js";
 
 export default interface IHandler {
 	/**

@@ -1,4 +1,4 @@
-import Bot from "../../classes/core/Bot";
+import Bot from "../../classes/core/Bot.js";
 import { Events } from "discord.js";
 
 export default interface IEvent {

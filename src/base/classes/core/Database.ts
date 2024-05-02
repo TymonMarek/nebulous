@@ -1,11 +1,11 @@
-import IDatabase from "../../interfaces/core/IDatabase";
-import { SGuild } from "../../schemas/SGuild";
-import { SUser } from "../../schemas/SUser";
+import IDatabase from "../../interfaces/core/IDatabase.js";
+import { SGuild } from "../../schemas/SGuild.js";
+import { SUser } from "../../schemas/SUser.js";
 import mongoose, { Model } from "mongoose";
-import MGuilds from "../../models/MGuilds";
-import MUsers from "../../models/MUsers";
+import MGuilds from "../../models/MGuilds.js";
+import MUsers from "../../models/MUsers.js";
 import { existsSync } from "fs";
-import Bot from "./Bot";
+import Bot from "./Bot.js";
 
 export default class Database implements IDatabase {
 	readonly bot: Bot;
