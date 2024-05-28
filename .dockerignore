@@ -139,3 +139,16 @@ certs
 
 # Docker
 docker-compose.yml
+
+# VS Code
+.vscode
+.eslintrc.json
+.prettierrc.json
+.prettierignore
+
+# Github
+.github
+.gitignore
+.gitattributes
+LICENSE.md
+imgs

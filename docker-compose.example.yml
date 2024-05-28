@@ -1,0 +1,16 @@
+version: "3"
+services:
+    nebulous:
+        image: nebulous
+        build: .
+        network_mode: host
+        volumes:
+            - /path/on/host/logs:/usr/src/app/logs
+        environment:
+            DISCORD_TOKEN: ..-_
+            MONGODB_URL: ..mongodb.net
+            MONGODB_CERT: |
+                -----BEGIN CERTIFICATE-----
+                -----END CERTIFICATE-----
+                -----BEGIN PRIVATE KEY-----
+                -----END PRIVATE KEY-----

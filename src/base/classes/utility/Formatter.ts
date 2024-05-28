@@ -1,6 +1,13 @@
 import IFormatter from "../../interfaces/utility/IFormatter.js";
+import Bot from "../core/Bot.js";
 
 export default class Formatter implements IFormatter {
+	readonly bot: Bot;
+
+	public constructor(bot: Bot) {
+		this.bot = bot;
+	}
+
 	formatMilliseconds(milliseconds: number): string {
 		const seconds = Math.floor(milliseconds / 1000);
 		const minutes = Math.floor(seconds / 60);
