@@ -1,7 +1,7 @@
 version: "3"
 services:
     nebulous:
-        image: nebulous
+        image: ulur/nebulous
         build: .
         network_mode: host
         volumes:
