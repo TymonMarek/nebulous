@@ -14,7 +14,6 @@ import dotenv from "dotenv";
 export default class Bot implements IBot {
 	readonly client: Client;
 
-	readonly mongodbURL: string;
 	readonly token: string;
 
 	readonly args: IProcessArgs;
@@ -40,35 +39,39 @@ export default class Bot implements IBot {
 		this.client = new Client({ intents: [] });
 
 		if (dotenv.config().error) {
-			// Load the .env file and check for errors
-			this.logger.error(new Error("No .env file found, please create a .env file with the required fields."));
+			// Load the environment variables and check for errors
+			this.logger.warn("A '.env' file was not found!");
+			this.logger.warn(
+				"If you are running in a production environment, make sure to provide the necessary environment variables."
+			);
+			this.logger.warn(dotenv.config().error?.message || "An unknown error was provided.");
 		}
 
 		if (!process.env.DISCORD_TOKEN) {
 			// Check if the token is provided
-			this.logger.error(new Error("No token provided, please provide a DISCORD_TOKEN in the .env file."));
+			this.logger.error(
+				new Error(
+					"No token provided, please pass DISCORD_TOKEN as an environment variable or provide one in a .env file."
+				)
+			);
 		}
 
-		if (!process.env.MONGODB_URL) {
-			// Check if the mongodb username is provided
-			this.logger.error(new Error("No MongoDB URL provided, please provide a MONGODB_URL in the .env file."));
-		}
-
-		this.mongodbURL = process.env.MONGODB_URL!;
 		this.token = process.env.DISCORD_TOKEN!;
 
 		this.args = this.parseProcessArgs();
 
 		this.commands = new Collection();
+
 		this.subCommands = new Collection();
 
 		this.cooldowns = new Collection();
 
 		this.database = new Database(this);
 
-		this.formatter = new Formatter();
+		this.formatter = new Formatter(this);
 
 		this.registrar = new Registrar(this);
+
 		this.handler = new Handler(this);
 
 		this.loader = new Loader(this);
@@ -78,7 +81,7 @@ export default class Bot implements IBot {
 		this.logger.debug("Bot is starting..."); // Log that the bot is starting
 
 		await this.logger.initialize(); // Initialize the logger
-		await this.database.connect(); // Connect to the database
+		await this.database.initialize(); // Connect to the database
 		await this.loader.loadEvents(); // Load the events
 		await this.loader.loadCommands(); // Load the commands
 
@@ -94,12 +97,12 @@ export default class Bot implements IBot {
 	}
 
 	parseProcessArgs(): IProcessArgs {
-		const args = process.argv.filter((arg) => arg.startsWith("--"));
+		const args = process.argv.filter((arg) => arg.startsWith("--")); // Filter out the arguments that start with "--"
 
 		this.logger.debug("Parsing process arguments...");
 
 		const processArgs: IProcessArgs = {
-			verbose: args.includes("--verbose")
+			verbose: args.includes("--verbose") || args.includes("--v") // Check if the verbose flag is provided
 		};
 
 		this.logger.debug(`Process arguments: ${JSON.stringify(processArgs)}`);
