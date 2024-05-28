@@ -25,7 +25,7 @@ export default class Ping extends Command {
 		await interaction.deferReply({ ephemeral: true });
 
 		const now = Date.now();
-		const ping = Math.floor(now - interaction.createdTimestamp);
+		const ping = Math.abs(Math.floor(now - interaction.createdTimestamp));
 
 		await interaction.editReply(`🏓 Pong! \`${ping}ms\``);
 	}
