@@ -44,7 +44,7 @@ export default class Bot implements IBot {
 			this.logger.warn(
 				"If you are running in a production environment, make sure to provide the necessary environment variables."
 			);
-			this.logger.warn(dotenv.config().error?.message || "An unknown error was provided.");
+			this.logger.debug(dotenv.config().error?.message || "An unknown error was provided.");
 		}
 
 		if (!process.env.DISCORD_TOKEN) {
@@ -61,19 +61,13 @@ export default class Bot implements IBot {
 		this.args = this.parseProcessArgs();
 
 		this.commands = new Collection();
-
 		this.subCommands = new Collection();
-
 		this.cooldowns = new Collection();
 
 		this.database = new Database(this);
-
 		this.formatter = new Formatter(this);
-
 		this.registrar = new Registrar(this);
-
 		this.handler = new Handler(this);
-
 		this.loader = new Loader(this);
 	}
 

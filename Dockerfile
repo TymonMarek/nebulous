@@ -13,8 +13,5 @@ RUN npm install
 # Build the project
 RUN npm run build
 
-# Expose MongoDB port
-EXPOSE 27017:27017
-
 # Run the app
-CMD ["npm", "start"]
+CMD ["npm", "start:verbose"]
