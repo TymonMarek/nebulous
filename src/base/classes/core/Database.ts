@@ -1,10 +1,9 @@
 import IDatabase from "../../interfaces/core/IDatabase.js";
 import { SGuild } from "../../schemas/SGuild.js";
 import { SUser } from "../../schemas/SUser.js";
-import mongoose, { Model } from "mongoose";
 import MGuilds from "../../models/MGuilds.js";
 import MUsers from "../../models/MUsers.js";
-import { existsSync, writeFileSync, mkdirSync } from "fs";
+import mongoose, { Model } from "mongoose";
 import Bot from "./Bot.js";
 
 export default class Database implements IDatabase {
@@ -14,7 +13,6 @@ export default class Database implements IDatabase {
 	readonly users: Model<SUser>;
 
 	private readonly url: string;
-	private readonly cert: string;
 
 	constructor(bot: Bot) {
 		this.bot = bot;
@@ -23,55 +21,23 @@ export default class Database implements IDatabase {
 		this.users = MUsers;
 
 		if (!process.env.MONGODB_URL) {
-			// Check if the mongodb username is provided
-			this.bot.logger.info("No MongoDB URL provided.");
-			this.bot.logger.warn("WARNING! All database related queries will fall back to a localhost!");
+			this.bot.logger.info("No MongoDB URL provided, using mongodb://database:27017/ instead.");
+			this.bot.logger.debug("The current environment is optimized for Docker.");
+			this.bot.logger.debug("You can provide a MongoDB URL by setting the MONGODB_URL environment variable.");
 		}
 
-		if (!process.env.MONGODB_CERT) {
-			this.bot.logger.info("No MongoDB certificate provided.");
-			this.bot.logger.warn("WARNING! All database related queries will most likely fail!");
-		}
-
-		this.url = process.env.MONGODB_URL! || "localhost";
-		this.cert = process.env.MONGODB_CERT! || "";
+		this.url = process.env.MONGODB_URL || "mongodb://database:27017/haze";
 	}
 
 	async initialize(): Promise<void> {
-		if (!existsSync(`${process.cwd()}/certs/mongodb.pem`)) {
-			this.bot.logger.warn(
-				"MongoDB certificate not found, attempting to generate one using environment variables!"
-			);
-
-			if (!this.cert) {
-				this.bot.logger.error(new Error("No MongoDB certificate provided, unable to generate one!"));
-			}
-
-			try {
-				this.bot.logger.debug("Generating MongoDB certificate...");
-				mkdirSync(`${process.cwd()}/certs`);
-				writeFileSync(`${process.cwd()}/certs/mongodb.pem`, this.cert);
-				this.bot.logger.info("MongoDB certificate generated!");
-			} catch (error) {
-				this.bot.logger.error(new Error(`Failed to generate MongoDB certificate: ${error}`));
-			}
-
-			await this.connect();
-		}
+		await this.connect();
 	}
 
 	async connect(): Promise<void> {
+		this.bot.logger.info("Connecting to MongoDB...");
 		try {
-			await mongoose.connect(
-				`mongodb+srv://${this.url}/?authSource=%24external&authMechanism=MONGODB-X509&retryWrites=true&w=majority`,
-				{
-					tlsCertificateKeyFile: `${process.cwd()}/certs/mongodb.pem`,
-					authMechanism: "MONGODB-X509",
-					authSource: "$external"
-				}
-			);
-
-			this.bot.logger.info("Connected to MongoDB.");
+			await mongoose.connect(this.url, {});
+			this.bot.logger.info("Connected to MongoDB!");
 		} catch (error) {
 			this.bot.logger.error(new Error(`Failed to connect to MongoDB: ${error}`));
 		}

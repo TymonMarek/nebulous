@@ -129,9 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Build 
-build
-
 # Certificates
 *.pem
 *.key
@@ -152,3 +149,17 @@ docker-compose.yml
 .gitattributes
 LICENSE.md
 imgs
+
+# Misc
+.eslint.json
+.gitattributes
+.gitignore
+.prettierignore
+.prettierrc.json
+README.md
+LICENSE.md
+tsconfig.json
+.github
+.vscode
+src
+node_modules

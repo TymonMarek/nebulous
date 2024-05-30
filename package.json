@@ -26,14 +26,14 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/TymonMarek/nebulous-client.git"
+		"url": "git+https://github.com/TymonMarek/nebulous"
 	},
 	"author": "Tymon Marek",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/TymonMarek/nebulous-client/issues"
+		"url": "https://github.com/TymonMarek/nebulous/issues"
 	},
-	"homepage": "https://github.com/TymonMarek/nebulous-client#readme",
+	"homepage": "https://github.com/TymonMarek/nebulous#readme",
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^7.11.0",
 		"@typescript-eslint/parser": "^7.11.0",
@@ -41,16 +41,16 @@
 		"eslint-config-prettier": "^9.1.0",
 		"husky": "^9.0.11",
 		"lint-staged": "^15.2.5",
-		"prettier": "^3.2.5"
+		"prettier": "^3.2.5",
+		"typescript": "^5.4.5"
 	},
 	"dependencies": {
 		"chalk": "^5.3.0",
 		"compressing": "^1.10.1",
 		"discord.js": "^14.15.2",
 		"dotenv": "^16.4.5",
-		"mongoose": "^8.4.0",
 		"glob": "^10.4.1",
-		"typescript": "^5.4.5",
+		"mongoose": "^8.4.0",
 		"url": "^0.11.3"
 	}
 }
