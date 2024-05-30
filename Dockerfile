@@ -13,5 +13,5 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install --production
 
-# Run the app
-CMD ["npm", "run", "start:verbose"]
+# Run the app (use "start:verbose" to see a more detailed output)
+CMD ["npm", "run", "start"]
