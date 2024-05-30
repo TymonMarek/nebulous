@@ -21,12 +21,12 @@ export default class Database implements IDatabase {
 		this.users = MUsers;
 
 		if (!process.env.MONGODB_URL) {
-			this.bot.logger.info("No MongoDB URL provided, using mongodb://mongodb:27017/ instead.");
-			this.bot.logger.debug("The current environment is optimized for Docker.")
-			this.bot.logger.debug("You can provide a MongoDB URL by setting the MONGODB_URL environment variable.")
+			this.bot.logger.info("No MongoDB URL provided, using mongodb://database:27017/ instead.");
+			this.bot.logger.debug("The current environment is optimized for Docker.");
+			this.bot.logger.debug("You can provide a MongoDB URL by setting the MONGODB_URL environment variable.");
 		}
 
-		this.url = process.env.MONGODB_URL || "mongodb://mongodb:27017/haze";
+		this.url = process.env.MONGODB_URL || "mongodb://database:27017/haze";
 	}
 
 	async initialize(): Promise<void> {

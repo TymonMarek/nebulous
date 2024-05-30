@@ -1,0 +1,41 @@
+name: Build and Test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]  # Latest LTS version as of 2024
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3  # Latest stable version
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3  # Latest stable version
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Compile TypeScript
+      run: npm run build
+
+    - name: Run tests
+      run: npm test
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3  # Latest stable version
+      with:
+        name: test-results
+        path: |
+          test-results
+          coverage

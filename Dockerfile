@@ -4,14 +4,14 @@ FROM node:22-slim
 # Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . /usr/src/app
+# Copy build artifacts
+COPY ./build ./build
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
 # Install dependencies
-RUN npm install
-
-# Build the project
-RUN npm run build
+RUN npm install --production
 
 # Run the app
-CMD ["npm", "start:verbose"]
+CMD ["npm", "run", "start:verbose"]
