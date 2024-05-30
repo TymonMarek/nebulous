@@ -12,9 +12,9 @@ services:
         image: ghcr.io/tymonmarek/nebulous:latest
         container_name: bot
         environment:
-            - DISCORD_TOKEN=YOUR_DISCORD_TOKEN
+            - DISCORD_TOKEN=${DISCORD_TOKEN}
         depends_on:
-            - mongodb
+            - database
         networks:
             - nebulous
 
