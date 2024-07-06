@@ -103,3 +103,4 @@ export default class Bot implements IBot {
 		return processArgs;
 	}
 }
+

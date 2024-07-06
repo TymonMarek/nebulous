@@ -19,3 +19,4 @@ export default class SubCommand implements ISubcommand {
 		throw new Error("Method not implemented.");
 	}
 }
+

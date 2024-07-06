@@ -30,3 +30,4 @@ export default class Ping extends Command {
 		await interaction.editReply(`🏓 Pong! \`${ping}ms\``);
 	}
 }
+

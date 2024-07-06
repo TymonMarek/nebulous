@@ -64,3 +64,4 @@ export default class Command implements ICommand {
 		return data;
 	}
 }
+

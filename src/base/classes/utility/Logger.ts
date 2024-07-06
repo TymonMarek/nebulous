@@ -44,10 +44,7 @@ export default class Logger implements ILogger {
 		console.debug(chalk.gray(message));
 	}
 
-	/**
-	 * @name initialize
-	 * @description Initializes the logger.
-	 */
+	
 	async initialize(): Promise<void> {
 		console.log("Initializing logger...");
 
@@ -82,12 +79,7 @@ export default class Logger implements ILogger {
 		}
 	}
 
-	/**
-	 * @name Save
-	 * @description Save to the log file.
-	 * @param text The text to save.
-	 * @private
-	 */
+	
 	private async save(text: string): Promise<void> {
 		if (!existsSync(`${process.cwd()}/logs/latest.txt`)) return;
 
@@ -98,11 +90,7 @@ export default class Logger implements ILogger {
 		}
 	}
 
-	/**
-	 * @name Compress
-	 * @description Compresses the file.
-	 * @private
-	 */
+	
 	private async compress(file: string): Promise<void> {
 		console.log("Compressing file...");
 
@@ -118,3 +106,4 @@ export default class Logger implements ILogger {
 		console.log("File compressed.");
 	}
 }
+

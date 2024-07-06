@@ -49,3 +49,4 @@ export default class InteractionCreate extends Event {
 		this.bot.logger.debug(`Interaction ${interaction.id} processed successfully!`);
 	}
 }
+

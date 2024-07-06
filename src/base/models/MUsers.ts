@@ -17,3 +17,4 @@ export default model<SUser>(
 		}
 	)
 );
+
