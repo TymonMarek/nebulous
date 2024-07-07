@@ -6,8 +6,6 @@ export default interface ILoader {
 
 	
 	loadEvents(): Promise<void>;
-
-	
 	loadCommands(): Promise<void>;
 }
 

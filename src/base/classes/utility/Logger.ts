@@ -24,9 +24,11 @@ export default class Logger implements ILogger {
 		console.warn(chalk.yellow(message));
 	}
 
-	async error(err: Error | unknown): Promise<never | undefined | void> {
+	async error(err: Error | unknown): Promise<never> {
 		if (!(err instanceof Error)) {
-			return this.warn("An error was reported, but it was not an instance of Error: " + err);
+			this.warn("An error was reported, but it was not an instance of Error: " + err);
+			err = new Error("Unknown error occurred.");
+			process.exit(1);
 		}
 
 		const text = `[${LogMessageType.Error}] ${err.name} - ${err.message}\n${err.stack}`;
@@ -46,29 +48,29 @@ export default class Logger implements ILogger {
 
 	
 	async initialize(): Promise<void> {
-		console.log("Initializing logger...");
+		this.debug("Initializing logger...");
 
 		if (!existsSync(`${process.cwd()}/logs`)) {
-			console.log("Creating logs directory...");
+			this.debug("Creating logs directory...");
 
 			try {
 				mkdirSync(`${process.cwd()}/logs`);
 			} catch (err) {
-				console.error("Failed to create logs directory: ", err);
+				this.error(new Error(`Failed to create logs directory: ${err}`));
 			}
 		}
 
 		if (existsSync(`${process.cwd()}/logs/latest.txt`)) {
-			console.log("Compressing old log file...");
+			this.debug("Compressing old log file...");
 			await this.compress(`${process.cwd()}/logs/latest.txt`);
 		}
 
-		console.log("Creating log file...");
+		this.debug("Creating log file...");
 
 		try {
 			writeFileSync(`${process.cwd()}/logs/latest.txt`, "");
 		} catch (err) {
-			console.error("Failed to create log file: ", err);
+			this.error(new Error(`Failed to create log file: ${err}`));
 		}
 
 		this.info("Logger initialized.");
@@ -86,13 +88,13 @@ export default class Logger implements ILogger {
 		try {
 			appendFileSync(`${process.cwd()}/logs/latest.txt`, text + "\n");
 		} catch (err) {
-			console.error("Failed to save to log file: ", err);
+			this.error(new Error(`Failed to save to log file: ${err}`));
 		}
 	}
 
 	
 	private async compress(file: string): Promise<void> {
-		console.log("Compressing file...");
+		this.debug("Compressing file...");
 
 		try {
 			const date = new Date();
@@ -100,10 +102,10 @@ export default class Logger implements ILogger {
 			const formattedTime = `${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`;
 			await gzip.compressFile(file, `${process.cwd()}/logs/${formattedDate}-${formattedTime}.txt.gz`, {});
 		} catch (err) {
-			console.error("Failed to compress file: ", err);
+			this.error(new Error(`Failed to compress file: ${err}`));
 		}
 
-		console.log("File compressed.");
+		this.debug("File compressed.");
 	}
 }
 

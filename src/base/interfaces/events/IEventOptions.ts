@@ -1,8 +1,8 @@
-import { Events } from "discord.js";
+import { ClientEvents } from "discord.js";
 
 export default interface IEventOptions {
 	
-	name: Events;
+	name: keyof ClientEvents;
 
 	
 	description: string;
