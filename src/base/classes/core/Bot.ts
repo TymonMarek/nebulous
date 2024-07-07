@@ -1,8 +1,9 @@
-import IProcessArgs from "../../interfaces/misc/IProcessArgs.js";
+import IProcessArgs from "../../interfaces/process/IProcessArgs.js";
+import IProcessEnv from "../../interfaces/process/IProcessEnv.js";
 import SubCommand from "../commands/SubCommand.js";
-import { Client, Collection } from "discord.js";
 import IBot from "../../interfaces/core/IBot.js";
 import Formatter from "../utility/Formatter.js";
+import { Client, Collection } from "discord.js";
 import Command from "../commands/Command.js";
 import Logger from "../utility/Logger.js";
 import Registrar from "./Registrar.js";
@@ -16,6 +17,7 @@ export default class Bot implements IBot {
 
 	readonly token: string;
 
+	readonly env: IProcessEnv;
 	readonly args: IProcessArgs;
 
 	readonly commands: Collection<string, Command>;
@@ -38,27 +40,10 @@ export default class Bot implements IBot {
 
 		this.client = new Client({ intents: [] });
 
-		if (dotenv.config().error) {
-			// Load the environment variables and check for errors
-			this.logger.warn("A '.env' file was not found!");
-			this.logger.warn(
-				"If you are running in a production environment, make sure to provide the necessary environment variables."
-			);
-			this.logger.debug(dotenv.config().error?.message || "An unknown error was provided.");
-		}
-
-		if (!process.env.DISCORD_TOKEN) {
-			// Check if the token is provided
-			this.logger.error(
-				new Error(
-					"No token provided, please pass DISCORD_TOKEN as an environment variable or provide one in a .env file."
-				)
-			);
-		}
+		this.env = this.parseProcessEnv();
+		this.args = this.parseProcessArgs();
 
 		this.token = process.env.DISCORD_TOKEN!;
-
-		this.args = this.parseProcessArgs();
 
 		this.commands = new Collection();
 		this.subCommands = new Collection();
@@ -102,4 +87,31 @@ export default class Bot implements IBot {
 		this.logger.debug(`Process arguments: ${JSON.stringify(processArgs)}`);
 		return processArgs;
 	}
+
+	parseProcessEnv(): IProcessEnv {
+		if (dotenv.config().error) {
+			this.logger.warn("A '.env' file was not found!");
+			this.logger.debug(dotenv.config().error?.message || "An unknown error was provided.");
+		}
+
+		if (!process.env.DISCORD_TOKEN) {
+			this.logger.error(new Error("No token provided!"));
+		}
+
+		const env: IProcessEnv = {
+			DISCORD_TOKEN: process.env.DISCORD_TOKEN!,
+			DATABASE_URI: process.env.DATABASE_URI!,
+			DATABASE_USER: process.env.DATABASE_USER!,
+			DATABASE_PASSWORD: process.env.DATABASE_PASSWORD!
+		};
+
+		if (!env.DATABASE_URI) {
+			this.logger.error("No database URI provided!");
+		}
+
+		this.logger.debug(`Parsed environment variables: ${JSON.stringify(env)}`);
+
+		return env;
+	}
 }
+

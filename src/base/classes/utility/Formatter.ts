@@ -22,3 +22,4 @@ export default class Formatter implements IFormatter {
 		return [formattedDays, formattedHours, formattedMinutes, formattedSeconds].filter(Boolean).join(" ");
 	}
 }
+

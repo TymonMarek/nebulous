@@ -12,7 +12,9 @@ export default class Database implements IDatabase {
 	readonly guilds: Model<SGuild>;
 	readonly users: Model<SUser>;
 
-	private readonly url: string;
+	private readonly user: string;
+	private readonly password: string;
+	private readonly uri: string;
 
 	constructor(bot: Bot) {
 		this.bot = bot;
@@ -20,13 +22,9 @@ export default class Database implements IDatabase {
 		this.guilds = MGuilds;
 		this.users = MUsers;
 
-		if (!process.env.MONGODB_URL) {
-			this.bot.logger.info("No MongoDB URL provided, using mongodb://database:27017/ instead.");
-			this.bot.logger.debug("The current environment is optimized for Docker.");
-			this.bot.logger.debug("You can provide a MongoDB URL by setting the MONGODB_URL environment variable.");
-		}
-
-		this.url = process.env.MONGODB_URL || "mongodb://database:27017/haze";
+		this.user = bot.env.DATABASE_USER;
+		this.password = bot.env.DATABASE_PASSWORD;
+		this.uri = bot.env.DATABASE_URI;
 	}
 
 	async initialize(): Promise<void> {
@@ -34,21 +32,24 @@ export default class Database implements IDatabase {
 	}
 
 	async connect(): Promise<void> {
-		this.bot.logger.info("Connecting to MongoDB...");
+		this.bot.logger.info("Connecting to database...");
 		try {
-			await mongoose.connect(this.url, {});
-			this.bot.logger.info("Connected to MongoDB!");
+			this.bot.logger.debug(`Connecting to ${this.uri}...`);
+			await mongoose.connect(`mongodb+srv://${this.bot.env.DATABASE_USER}:${this.bot.env.DATABASE_PASSWORD}@${this.uri}`, {});
+			this.bot.logger.debug(`Connected as ${this.bot.env.DATABASE_USER}!`);
+			this.bot.logger.info("Connected to database!");
 		} catch (error) {
-			this.bot.logger.error(new Error(`Failed to connect to MongoDB: ${error}`));
+			this.bot.logger.error(new Error(`Failed to connect to database: ${error}`));
 		}
 	}
 
 	async disconnect(): Promise<void> {
 		try {
 			await mongoose.disconnect();
-			this.bot.logger.info("Disconnected from MongoDB.");
+			this.bot.logger.info("Disconnected from database.");
 		} catch (error) {
-			this.bot.logger.error(new Error(`Failed to disconnect from MongoDB: ${error}`));
+			this.bot.logger.error(new Error(`Failed to disconnect from database: ${error}`));
 		}
 	}
 }
+
