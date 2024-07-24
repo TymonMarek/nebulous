@@ -20,12 +20,10 @@ export default class Ping extends Command {
     }   
 
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-        const ping = this.bot.client.ws.ping
-        this.bot.logger.debug(`Ping: ${ping}ms`);
+        const pong = await interaction.deferReply({ ephemeral: true });
 
-        await interaction.reply({
-            content: `Pong! ${this.bot.client.ws.ping}ms`,
-            ephemeral: true
+        await interaction.editReply({
+            content: `Pong! ${pong.createdTimestamp - interaction.createdTimestamp}ms`,
         });
     }
 }

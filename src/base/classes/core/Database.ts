@@ -35,8 +35,8 @@ export default class Database implements IDatabase {
 		this.bot.logger.info("Connecting to database...");
 		try {
 			this.bot.logger.debug(`Connecting to ${this.uri}...`);
-			await mongoose.connect(`mongodb+srv://${this.bot.env.DATABASE_USER}:${this.bot.env.DATABASE_PASSWORD}@${this.uri}`, {});
-			this.bot.logger.debug(`Connected as ${this.bot.env.DATABASE_USER}!`);
+			await mongoose.connect(`mongodb+srv://${this.user}:${this.password}@${this.uri}`, {});
+			this.bot.logger.debug(`Connected as ${this.user}!`);
 			this.bot.logger.info("Connected to database!");
 		} catch (error) {
 			this.bot.logger.error(new Error(`Failed to connect to database: ${error}`));

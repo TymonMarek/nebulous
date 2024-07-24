@@ -24,15 +24,15 @@ export default class Logger implements ILogger {
 		console.warn(chalk.yellow(message));
 	}
 
-	async error(err: Error | unknown): Promise<never> {
+	error(err: Error | unknown): Promise<never> {
 		if (!(err instanceof Error)) {
-			this.warn("An error was reported, but it was not an instance of Error: " + err);
-			err = new Error("Unknown error occurred.");
+			
+			console.trace(`${err}`)
 			process.exit(1);
 		}
 
 		const text = `[${LogMessageType.Error}] ${err.name} - ${err.message}\n${err.stack}`;
-		console.error(chalk.red(`${err.name}\n${err.message}\n${err.stack}`));
+		console.log(chalk.red(`${err.name}\n${err.message}\n${err.stack}`));
 		this.save(text);
 		process.exit(1);
 	}
@@ -45,7 +45,6 @@ export default class Logger implements ILogger {
 		if (!this.bot.args.verbose) return;
 		console.debug(chalk.gray(message));
 	}
-
 	
 	async initialize(): Promise<void> {
 		this.debug("Initializing logger...");
