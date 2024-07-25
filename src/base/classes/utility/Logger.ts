@@ -26,8 +26,7 @@ export default class Logger implements ILogger {
 
 	error(err: Error | unknown): Promise<never> {
 		if (!(err instanceof Error)) {
-			
-			console.trace(`${err}`)
+			console.trace(`${err}`);
 			process.exit(1);
 		}
 
@@ -45,7 +44,7 @@ export default class Logger implements ILogger {
 		if (!this.bot.args.verbose) return;
 		console.debug(chalk.gray(message));
 	}
-	
+
 	async initialize(): Promise<void> {
 		this.debug("Initializing logger...");
 
@@ -80,7 +79,6 @@ export default class Logger implements ILogger {
 		}
 	}
 
-	
 	private async save(text: string): Promise<void> {
 		if (!existsSync(`${process.cwd()}/logs/latest.txt`)) return;
 
@@ -91,7 +89,6 @@ export default class Logger implements ILogger {
 		}
 	}
 
-	
 	private async compress(file: string): Promise<void> {
 		this.debug("Compressing file...");
 
@@ -107,4 +104,3 @@ export default class Logger implements ILogger {
 		this.debug("File compressed.");
 	}
 }
-

@@ -38,7 +38,9 @@ export default class Database implements IDatabase {
 		try {
 			this.bot.logger.debug(`Connecting to ${this.uri}...`);
 			await mongoose.connect(`mongodb+srv://${this.user}:${this.password}@${this.uri}/${this.collection}`, {});
-			this.bot.logger.debug(`Connected to collection ${this.collection} with user ${this.user} at database ${this.uri}!`);
+			this.bot.logger.debug(
+				`Connected to collection ${this.collection} with user ${this.user} at database ${this.uri}!`
+			);
 			this.bot.logger.info(`Connected to database!`);
 		} catch (error) {
 			this.bot.logger.error(new Error(`Failed to connect to database: ${error}`));
@@ -54,4 +56,3 @@ export default class Database implements IDatabase {
 		}
 	}
 }
-

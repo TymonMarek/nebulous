@@ -27,4 +27,3 @@ export default class Event implements IEvent {
 		throw new Error("Method not implemented.");
 	}
 }
-

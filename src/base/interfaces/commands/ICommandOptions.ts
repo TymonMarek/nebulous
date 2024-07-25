@@ -9,10 +9,9 @@ export default interface ICommandOptions {
 	nsfw: boolean;
 
 	default_member_permission: bigint;
-	
+
 	enabled: boolean;
 	cooldown: number;
-	
+
 	options: object;
 }
-

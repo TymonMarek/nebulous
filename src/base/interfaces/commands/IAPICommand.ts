@@ -8,4 +8,3 @@ export default interface IAPICommand {
 
 	readonly options: object;
 }
-

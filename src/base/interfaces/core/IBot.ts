@@ -13,23 +13,22 @@ import IProcessEnv from "../process/IProcessEnv.js";
 export default interface IBot {
 	client: Client;
 	token: string;
-	
+
 	commands: Collection<string, Command>;
 	subCommands: Collection<string, SubCommand>;
 	cooldowns: Collection<string, Collection<string, number>>;
 
 	env: IProcessEnv;
 	args: IProcessArgs;
-	
+
 	database: Database;
 	formatter: Formatter;
 	registrar: Registrar;
 	loader: Loader;
 	logger: Logger;
 	handler: Handler;
-	
+
 	initialize(): Promise<void>; // Initialize the bot
-	
+
 	parseProcessArgs(): IProcessArgs; // Parse the process arguments
 }
-

@@ -22,4 +22,3 @@ export default interface ICommand {
 	readonly execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
 	readonly autocomplete: (interaction: AutocompleteInteraction) => Promise<void>;
 }
-

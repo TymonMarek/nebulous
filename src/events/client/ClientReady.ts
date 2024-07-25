@@ -18,4 +18,3 @@ export default class ClientReady extends Event {
 		this.bot.registrar.registerCommands(); // Register commands to the API
 	}
 }
-

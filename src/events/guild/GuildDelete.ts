@@ -20,4 +20,3 @@ export default class GuildDelete extends Event {
 		await this.bot.database.guilds.deleteOne({ id: guild.id }); // Delete the document from the database.
 	}
 }
-
