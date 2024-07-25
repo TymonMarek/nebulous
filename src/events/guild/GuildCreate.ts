@@ -22,4 +22,3 @@ export default class GuildCreate extends Event {
 		});
 	}
 }
-
