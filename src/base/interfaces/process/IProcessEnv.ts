@@ -3,5 +3,6 @@ export default interface IProcessEnv {
     DATABASE_URI: string;
     DATABASE_USER: string;
     DATABASE_PASSWORD: string;
+    DATABASE_COLLECTION?: string;
 }
 

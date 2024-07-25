@@ -15,6 +15,7 @@ export default class Database implements IDatabase {
 	private readonly user: string;
 	private readonly password: string;
 	private readonly uri: string;
+	private readonly collection: string;
 
 	constructor(bot: Bot) {
 		this.bot = bot;
@@ -25,6 +26,7 @@ export default class Database implements IDatabase {
 		this.user = bot.env.DATABASE_USER;
 		this.password = bot.env.DATABASE_PASSWORD;
 		this.uri = bot.env.DATABASE_URI;
+		this.collection = bot.env.DATABASE_COLLECTION || "test";
 	}
 
 	async initialize(): Promise<void> {
@@ -35,9 +37,9 @@ export default class Database implements IDatabase {
 		this.bot.logger.info("Connecting to database...");
 		try {
 			this.bot.logger.debug(`Connecting to ${this.uri}...`);
-			await mongoose.connect(`mongodb+srv://${this.user}:${this.password}@${this.uri}`, {});
-			this.bot.logger.debug(`Connected as ${this.user}!`);
-			this.bot.logger.info("Connected to database!");
+			await mongoose.connect(`mongodb+srv://${this.user}:${this.password}@${this.uri}/${this.collection}`, {});
+			this.bot.logger.debug(`Connected to collection ${this.collection} with user ${this.user} at database ${this.uri}!`);
+			this.bot.logger.info(`Connected to database!`);
 		} catch (error) {
 			this.bot.logger.error(new Error(`Failed to connect to database: ${error}`));
 		}
