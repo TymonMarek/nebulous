@@ -19,21 +19,6 @@ export default interface ICommand {
 
 	readonly options: object;
 
-	/**
-	 * What to do when the command is executed.
-	 * @name Execute
-	 * @param {ChatInputCommandInteraction} interaction
-	 * @readonly
-	 * @async
-	 */
 	readonly execute: (interaction: ChatInputCommandInteraction) => Promise<void>;
-
-	/**
-	 * What to do when the command arguments are autocompleted.
-	 * @name Autocomplete
-	 * @param {AutocompleteInteraction} interaction
-	 * @readonly
-	 * @async
-	 */
 	readonly autocomplete: (interaction: AutocompleteInteraction) => Promise<void>;
 }

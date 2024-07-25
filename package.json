@@ -11,18 +11,9 @@
 		"format:fix": "prettier --write .",
 		"build": "tsc",
 		"build:clean": "rmdir /s /q build && tsc",
-		"watch": "tsc -watch",
 		"start": "node build/index.js",
 		"start:verbose": "node build/index.js --verbose",
-		"test": "npm run lint && npm run format && npm run build",
-		"precommit": "lint-staged"
-	},
-	"lint-staged": {
-		"*.ts": [
-			"eslint --fix",
-			"prettier --write",
-			"git add"
-		]
+		"test": "npm run lint && npm run format && npm run build"
 	},
 	"repository": {
 		"type": "git",
@@ -39,8 +30,6 @@
 		"@typescript-eslint/parser": "^7.14.1",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
-		"husky": "^9.0.11",
-		"lint-staged": "^15.2.7",
 		"prettier": "^3.3.2",
 		"typescript": "^5.4.5"
 	},
@@ -49,8 +38,8 @@
 		"compressing": "^1.10.1",
 		"discord.js": "^14.15.3",
 		"dotenv": "^16.4.5",
-		"glob": "^10.4.3",
-		"mongoose": "^8.4.4",
+		"glob": "^10.4.1",
+		"mongoose": "^8.4.5",
 		"url": "^0.11.3"
 	}
 }
