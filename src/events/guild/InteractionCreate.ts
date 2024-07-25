@@ -14,14 +14,7 @@ export default class InteractionCreate extends Event {
 
 	async Execute(interaction: Interaction) {
 		this.bot.logger.debug(
-			`new Interaction { 
-				id: ${interaction.id}, 
-				type: ${interaction.type}, 
-				user: ${interaction.user.tag}, 
-				guild: ${interaction.guild?.id},
-				channel: ${interaction.channel?.id},
-				createdAt: ${interaction.createdTimestamp}
-			}`
+			`Interaction created! (id: ${interaction.id}, type: ${interaction.type}, user: ${interaction.user.id}, guild: ${interaction.guild?.id}, createdAt: ${interaction.createdTimestamp})`
 		);
 
 		try {
