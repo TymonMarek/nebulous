@@ -1,4 +1,4 @@
-import { Events } from "discord.js";
+import { ClientEvents } from "discord.js";
 import IEvent from "../../interfaces/events/IEvent.js";
 import IEventOptions from "../../interfaces/events/IEventOptions.js";
 import Bot from "../core/Bot.js";
@@ -6,7 +6,7 @@ import Bot from "../core/Bot.js";
 export default class Event implements IEvent {
 	bot: Bot;
 
-	name: Events;
+	name: keyof ClientEvents;
 	description: string;
 
 	once: boolean;
