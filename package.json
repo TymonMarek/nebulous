@@ -25,7 +25,8 @@
   "main": "./out/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "npm run build && node ."
+    "start": "npm run build && node .",
+    "dev": "nodemon --ext ts --exec \"npm run start\""
   },
   "dependencies": {
     "discord.js": "^14.17.3",
