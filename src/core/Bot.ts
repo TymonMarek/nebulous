@@ -1,6 +1,6 @@
-import Enviroment from "./Enviroment.js";
+import Enviroment from "./Configuration/Enviroment.js";
+import Handler from "./Events/EventHandler.js";
 import { Client } from "discord.js";
-import Handler from "./Handler.js";
 
 export interface IBot {
     enviroment: Enviroment;

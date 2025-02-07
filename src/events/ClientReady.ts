@@ -1,6 +1,6 @@
-import Event from "../core/Event.js";
+import Event from "../Core/Events/Event.js";
 import { Events } from "discord.js";
-import Bot from "../core/Bot.js";
+import Bot from "../Core/Bot.js";
 
 export default class ClientReady extends Event {
     constructor(bot: Bot) {

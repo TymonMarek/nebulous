@@ -1,6 +1,6 @@
-import Event from "./Event.js";
+import Event from "./Event";
 import { glob } from "glob";
-import Bot from "./Bot.js";
+import Bot from "../Bot";
 import path from "path";
 
 export interface IHandler {
@@ -17,7 +17,7 @@ export default class Handler implements IHandler {
     }
 
     async LoadEvents() {
-        const filePaths = await glob("./out/events/**/*.js");
+        const filePaths = await glob("./out/Events/**/*.js");
         const trueFilePaths = filePaths.map(filePath => path.resolve(filePath));
         
         trueFilePaths.forEach(async (file: string) => {

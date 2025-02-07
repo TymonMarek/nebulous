@@ -1,5 +1,5 @@
 import { ClientEvents } from "discord.js";
-import Bot from "./Bot.js";
+import Bot from "../Bot";
 
 export interface IEventOptions {
     name: keyof ClientEvents,
