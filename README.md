@@ -74,4 +74,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-- **Discord:** [Server (if applicable)](https://discord.gg/HZu5BvXQ)
+- **Discord:** [Server](https://discord.gg/HZu5BvXQ)
