@@ -1,0 +1,39 @@
+{
+  "name": "nebulous",
+  "version": "1.0.0",
+  "description": "A future-proof, produciton-ready, and open-source Discord bot made using TypeScript and DiscordJS.",
+  "keywords": [
+    "Discord",
+    "Bot",
+    "Discord.JS",
+    "TypeScript",
+    "JavaScript",
+    "JS",
+    "TS",
+    "DC"
+  ],
+  "homepage": "https://github.com/TymonMarek/nebulous#readme",
+  "bugs": {
+    "url": "https://github.com/TymonMarek/nebulous/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TymonMarek/nebulous.git"
+  },
+  "license": "MIT",
+  "author": "Tymon Marek",
+  "main": "./out/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node ."
+  },
+  "dependencies": {
+    "discord.js": "^14.17.3",
+    "glob": "^11.0.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7",
+    "globals": "^15.14.0",
+    "typescript": "^5.7.3"
+  }
+}
