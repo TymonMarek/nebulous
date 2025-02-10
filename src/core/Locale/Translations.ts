@@ -36,9 +36,6 @@ export default class Translation implements ITranslations {
             }
 
             if (!localeTranslationTable.enabled) {
-                if (localeTranslationTable.languageName != "Template Language") {
-                    console.warn(`The locale ${localeTranslationTable.localeCode} is not enabled!`);
-                }
                 delete require.cache[require.resolve(file)];
                 continue;
             }
@@ -50,14 +47,13 @@ export default class Translation implements ITranslations {
 
     get(locale: Locale, key: TranslationKey, ...args: any[]): string {
         const defaultLocale = Locale.EnglishGB;
-
         const translationTable = this.locales.get(locale) || this.locales.get(defaultLocale);
 
         if (!translationTable) {
-            console.warn(`No translation found for locale: ${locale}, falling back to English.`);
+            console.warn(`No translation found for locale: ${locale}!`);
             return `${key}`;
         }
 
-        return translationTable.getTranslation(key, this.locales.get(defaultLocale)!, ...args);
+        return translationTable.get(key, this.locales.get(defaultLocale)!, ...args);
     }
 }
