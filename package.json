@@ -24,7 +24,8 @@
   "author": "Tymon Marek",
   "main": "./out/index.js",
   "scripts": {
-    "build": "rmdir /s /q out && tsc",
+    "build:clean": "(if exist \"out\" rmdir /s /q \"out\") && tsc",
+    "build": "tsc",
     "start": "npm run build && node .",
     "dev": "nodemon --ext ts --exec \"npm run start\""
   },
