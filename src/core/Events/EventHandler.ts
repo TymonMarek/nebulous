@@ -3,13 +3,13 @@ import { glob } from "glob";
 import Bot from "../Bot";
 import path from "path";
 
-export interface IHandler {
+export interface IEventHandler {
     bot: Bot;
 
     LoadEvents(): void;
 }
 
-export default class Handler implements IHandler {
+export default class EventHandler implements IEventHandler {
     bot: Bot;
 
     constructor(bot: Bot) {
