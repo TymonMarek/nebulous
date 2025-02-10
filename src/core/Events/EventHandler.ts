@@ -32,7 +32,7 @@ export default class EventHandler implements IEventHandler {
             if (event.once) {
                 this.bot.once(event.name, event.OnEvent);
             } else {
-                this.bot.on (event.name, event.OnEvent);
+                this.bot.on(event.name, event.OnEvent);
             }
 
             delete require.cache[require.resolve(file)];

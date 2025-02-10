@@ -1,7 +1,7 @@
 import { Collection, Events, Interaction, REST, Routes } from "discord.js";
-import { Command } from "../../Core/Commands/Command";
-import Event from "../../Core/Events/Event";
-import Bot from "../../Core/Bot";
+import { Command } from "../Core/Commands/Command";
+import Event from "../Core/Events/Event";
+import Bot from "../Core/Bot";
 
 export interface IJSONCommand {
     name: string;

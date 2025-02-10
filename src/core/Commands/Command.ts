@@ -4,6 +4,8 @@ import Bot from "../Bot";
 export interface ICommandOptions {
     name: string;
     description: string;
+    nsfw: boolean;
+
     options: object;
     
     defaultMemberPermissions: bigint;
@@ -16,6 +18,8 @@ export interface ICommand {
 
     name: string;
     description: string;
+    nsfw: boolean;
+
     options: object;
     
     defaultMemberPermissions: bigint;
@@ -32,6 +36,7 @@ export class Command implements ICommand {
     name: string;
     description: string;
     options: object;
+    nsfw: boolean;
 
     defaultMemberPermissions: bigint;
     enabledInDms: boolean;
@@ -42,6 +47,8 @@ export class Command implements ICommand {
 
         this.name = options.name;
         this.description = options.description;
+        this.nsfw = options.nsfw;
+        
         this.options = options.options;
     
         this.defaultMemberPermissions = options.defaultMemberPermissions;

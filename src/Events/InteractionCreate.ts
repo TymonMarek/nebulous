@@ -1,7 +1,8 @@
 import { Collection, Events, Interaction, MessageFlags, time } from "discord.js";
-import { Command } from "../../Core/Commands/Command";
-import Event from "../../Core/Events/Event"
-import Bot from "../../Core/Bot";
+import { Command } from "../Core/Commands/Command";
+import Event from "../Core/Events/Event"
+import Bot from "../Core/Bot";
+import { TranslationKey } from "../Core/Locale/TranslationKey";
 
 export default class InteractionCreate extends Event {
     constructor(bot: Bot) {
@@ -22,7 +23,7 @@ export default class InteractionCreate extends Event {
         if (!command) {
             this.bot.commands.delete(interaction.commandName);
             return interaction.reply({
-                content: "I'm not sure how you got here, but this command does not exist...",
+                content: this.bot.translations.get(interaction.locale, TranslationKey.UnknownCommandReply),
                 flags: MessageFlags.Ephemeral
             });
         }

@@ -1,4 +1,5 @@
 import { ChatInputCommandInteraction, MessageFlags, PermissionsBitField } from "discord.js";
+import { TranslationKey } from "../Core/Locale/TranslationKey";
 import { Command } from "../Core/Commands/Command";
 import Bot from "../Core/Bot";
 
@@ -6,11 +7,14 @@ export default class Ping extends Command {
     constructor(bot: Bot) {
         super(bot, {
             name: "ping",
-            description: "Get the ping of the bot to you and Discord.",
+            description: "Measure the time it takes for a message to do a full trip from the bot to Discord.",
+            nsfw: false,
+
             options: [],
+            
             defaultMemberPermissions: PermissionsBitField.Flags.UseApplicationCommands,
             enabledInDms: true,
-            debounce: 3
+            debounce: 3,
         })
     }
 
@@ -20,7 +24,7 @@ export default class Ping extends Command {
         const responseTime = Date.now() - startTime;
     
         await interaction.editReply({
-            content: `${responseTime}ms`,
+            content: this.bot.translations.get(interaction.locale, TranslationKey.PingReply, responseTime),
         });
     }
     
