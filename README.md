@@ -41,10 +41,11 @@ Ensure you have the following:
 1. Create a `.env` file in the root directory and add the following:
 
    ```env
-   token=your-bot-token 
+   token=your-bot-token
+   clientId=your-client-id
    ```
 
-   Replace `your-bot-token` with your bot's token from [Discord Developer Application](https://discord.com/developers/applications).
+   Replace `your-bot-token` and `your-client-id` with your bot's token and client ID from [Discord Developer Application](https://discord.com/developers/applications).
 
 ### Running the Bot
 
