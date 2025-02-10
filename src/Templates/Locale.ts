@@ -30,13 +30,14 @@ export default class TemplateLocale extends TranslationTable {
 
             /**
              * The translations for this language.
-             * Keys should be from the `TranslationKey` enum.
+             * Keys should be from the `TranslationKey` (../Core/Locale/TranslationKey) enum.
              * Values can be either static strings or functions for dynamic values.
              */
             translations: {
+                // Example of a static translation.
                 [TranslationKey.UnknownCommandReply]: "Translation for 'Unknown command!'",
 
-                // Example of a dynamic translation using template strings
+                // Example of a dynamic translation using template strings.
                 [TranslationKey.PingReply]: (ping: number) => `Pong, ${ping}ms!`,
             },
         });
