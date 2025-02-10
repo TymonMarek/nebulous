@@ -1,7 +1,7 @@
 /**
  * Represents the available translation keys for localized messages.
  */
-export enum TranslationKey {
+export enum Text {
     /**
      * Reply message for when a user executes a command that is valid.
      */

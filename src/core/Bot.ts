@@ -1,10 +1,10 @@
-import { TranslationTable } from "./Locale/TranslationTable";
 import { Client, Collection, Locale } from "discord.js";
 import CommandHandler from "./Commands/CommandHandler";
 import Enviroment from "./Configuration/Enviroment";
 import { SubCommand } from "./Commands/SubCommand";
 import EventHandler from "./Events/EventHandler";
-import Translations from "./Locale/Translations";
+import Localization from "./Locale/Localization";
+import { Language } from "./Locale/Language";
 import { Command } from "./Commands/Command";
 
 export interface IBot {
@@ -16,9 +16,7 @@ export interface IBot {
     commands: Collection<string, Command>
     subCommands: Collection<string, SubCommand>
     
-    translations: Translations;
-    locales: Collection<string, TranslationTable>
-    
+    localization: Localization;    
     cooldowns: Collection<string, Collection<string, number>>
 
     LoadHandlers(): void;
@@ -33,8 +31,7 @@ export default class Bot extends Client implements IBot {
     commands: Collection<string, Command>;
     subCommands: Collection<string, SubCommand>;
     
-    translations: Translations;
-    locales: Collection<Locale, TranslationTable>;
+    localization: Localization;
 
     cooldowns: Collection<string, Collection<string, number>>;
 
@@ -43,14 +40,13 @@ export default class Bot extends Client implements IBot {
 
         this.enviroment = new Enviroment();
                 
-        this.translations = new Translations(this);
-        this.locales = new Collection();
-
         this.commandHandler = new CommandHandler(this);
         this.eventHandler = new EventHandler(this);
         
         this.commands = new Collection();
         this.subCommands = new Collection();
+
+        this.localization = new Localization(this);
 
         this.cooldowns = new Collection();
 
@@ -62,7 +58,7 @@ export default class Bot extends Client implements IBot {
     }
 
     async LoadHandlers() {
-        this.translations.LoadLocales();
+        this.localization.LoadLocales();
 
         this.eventHandler.LoadEvents();
         this.commandHandler.LoadCommands();

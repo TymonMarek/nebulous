@@ -26,7 +26,7 @@
   "scripts": {
     "build:clean": "(if exist \"out\" rmdir /s /q \"out\") && tsc",
     "build": "tsc",
-    "start": "npm run build && node .",
+    "start": "npm run build:clean && node .",
     "dev": "nodemon --ext ts --exec \"npm run start\""
   },
   "dependencies": {

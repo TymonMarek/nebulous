@@ -1,26 +1,26 @@
-import { TranslationTable } from "../Core/Locale/TranslationTable";
-import { TranslationKey } from "../Core/Locale/TranslationKey";
+import { Language  } from "../Core/Locale/Language";
+import { Text } from "../Core/Enums/TranslationKey";
 import { Locale } from "discord.js";
 
 /**
  * Template for creating a new locale translation file.
  * Replace `TemplateLocale` with the actual language name (e.g., `FrenchLocale`).
  */
-export default class TemplateLocale extends TranslationTable {
+export default class TemplateLocale extends Language {
     constructor() {
         super({
             /**
              * The full name of the language in English.
              * Example: "Français (France)" for French.
              */
-            languageName: "Template Language",
+            name: "Template Language",
 
             /**
              * The corresponding Discord.js locale code.
              * Example: Locale.French for French.
              * Full list: https://discord-api-types.dev/api/discord-api-types-v10/enum/Locale
              */
-            localeCode: Locale.EnglishGB, // Change this to the correct locale
+            locale: Locale.EnglishGB, // Change this to the correct locale
 
             /**
              * Determines whether this language is enabled.
@@ -35,10 +35,10 @@ export default class TemplateLocale extends TranslationTable {
              */
             translations: {
                 // Example of a static translation.
-                [TranslationKey.UnknownCommandReply]: "Translation for 'Unknown command!'",
+                [Text.UnknownCommandReply]: "Translation for 'Unknown command!'",
 
                 // Example of a dynamic translation using template strings.
-                [TranslationKey.PingReply]: (ping: number) => `Pong, ${ping}ms!`,
+                [Text.PingReply]: (ping: number) => `Pong, ${ping}ms!`,
             },
         });
     }

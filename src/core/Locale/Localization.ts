@@ -1,21 +1,21 @@
-import { TranslationTable } from "./TranslationTable";
-import { TranslationKey } from "./TranslationKey";
+import { Text } from "../Enums/TranslationKey";
+import { Language } from "./Language";
 import { Locale } from "discord.js";
 import { glob } from "glob";
 import Bot from "../Bot";
 import path from "path";
 
-export interface ITranslations {
+export interface ILocalization {
     bot: Bot;
-    locales: Map<Locale, TranslationTable>;
+    locales: Map<Locale, Language>;
 
     LoadLocales(): Promise<void>;
-    get(locale: Locale, key: TranslationKey, ...args: any[]): string;
+    get(locale: Locale, key: Text, ...args: any[]): string;
 }
 
-export default class Translation implements ITranslations {
+export default class Localization implements ILocalization {
     bot: Bot;
-    locales: Map<Locale, TranslationTable>;
+    locales: Map<Locale, Language>;
 
     constructor(bot: Bot) {
         this.bot = bot;
@@ -27,33 +27,33 @@ export default class Translation implements ITranslations {
         const trueFilePaths = filePaths.map((filePath) => path.resolve(filePath));
 
         for (const file of trueFilePaths) {
-            const localeTranslationTable: TranslationTable = new (await import("file://" + file)).default.default(this.bot);
+            const language: Language = new (await import("file://" + file)).default.default(this.bot);
 
-            if (!localeTranslationTable.localeCode) {
+            if (!language.locale) {
                 console.warn(`${file} does not have a locale code!`);
                 delete require.cache[require.resolve(file)];
                 continue;
             }
 
-            if (!localeTranslationTable.enabled) {
+            if (!language.enabled) {
                 delete require.cache[require.resolve(file)];
                 continue;
             }
 
-            this.locales.set(localeTranslationTable.localeCode, localeTranslationTable);
+            this.locales.set(language.locale, language);
             delete require.cache[require.resolve(file)];
         }
     }
 
-    get(locale: Locale, key: TranslationKey, ...args: any[]): string {
+    get(locale: Locale, key: Text, ...args: any[]): string {
         const defaultLocale = Locale.EnglishGB;
-        const translationTable = this.locales.get(locale) || this.locales.get(defaultLocale);
+        const language = this.locales.get(locale) || this.locales.get(defaultLocale);
 
-        if (!translationTable) {
+        if (!language) {
             console.warn(`No translation found for locale: ${locale}!`);
             return `${key}`;
         }
 
-        return translationTable.get(key, this.locales.get(defaultLocale)!, ...args);
+        return language.get(key, this.locales.get(defaultLocale)!, ...args);
     }
 }

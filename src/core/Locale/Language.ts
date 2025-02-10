@@ -1,19 +1,19 @@
-import { TranslationKey } from "./TranslationKey";
+import { Text } from "../Enums/TranslationKey";
 import { Locale } from "discord.js";
 
 /**
  * Represents the options for configuring a locale.
  */
-export interface ILocaleOptions {
+export interface ILanguageOptions {
     /**
      * The display name of the language.
      */
-    languageName: string;
+    name: string;
 
     /**
      * The Discord locale code corresponding to this language.
      */
-    localeCode: Locale;
+    locale: Locale;
 
     /**
      * Whether this locale is enabled.
@@ -25,22 +25,22 @@ export interface ILocaleOptions {
      * A mapping of translation keys to their corresponding translations.
      * Translations can be either a string or a function that generates a string.
      */
-    translations: Partial<Record<TranslationKey, string | ((...args: any[]) => string)>>;
+    translations: Partial<Record<Text, string | ((...args: any[]) => string)>>;
 }
 
 /**
  * Represents a table of translations for a specific locale.
  */
-export interface ITranslationTable {
+export interface ILanguage {
     /**
      * The display name of the language.
      */
-    languageName: string;
+    name: string;
 
     /**
      * The Discord locale code corresponding to this language.
      */
-    localeCode: Locale;
+    locale: Locale;
 
     /**
      * Whether this locale is enabled.
@@ -51,36 +51,36 @@ export interface ITranslationTable {
      * A mapping of translation keys to their corresponding translations.
      * Translations can be either a string or a function that generates a string.
      */
-    translations: Partial<Record<TranslationKey, string | ((...args: any[]) => string)>>;
+    translations: Partial<Record<Text, string | ((...args: any[]) => string)>>;
 
     /**
      * Retrieves a translation for the given key.
-     * Falls back to another translation table if the key is missing.
+     * Falls back to another language if the key is missing.
      *
      * @param key - The translation key to retrieve.
-     * @param fallback - A fallback translation table to use if the key is not found.
+     * @param fallback - A fallback language to use if the key is not found.
      * @returns The translated string.
      */
-    get(key: TranslationKey, fallback: TranslationTable): string;
+    get(key: Text, fallback: Language): string;
 }
 
 /**
- * Implements a translation table for managing localized text.
+ * Implements a language for managing localized text.
  */
-export class TranslationTable implements ITranslationTable {
-    languageName: string;
-    localeCode: Locale;
+export class Language implements ILanguage {
+    name: string;
+    locale: Locale;
     enabled: boolean;
-    translations: Partial<Record<TranslationKey, string | ((...args: any[]) => string)>>;
+    translations: Partial<Record<Text, string | ((...args: any[]) => string)>>;
 
     /**
      * Creates a new translation table.
      *
-     * @param options - The locale options used to configure this table.
+     * @param options - The options used to configure this language.
      */
-    constructor({ languageName, localeCode, enabled = true, translations }: ILocaleOptions) {
-        this.languageName = languageName;
-        this.localeCode = localeCode;
+    constructor({ name, locale, enabled = true, translations }: ILanguageOptions) {
+        this.name = name;
+        this.locale = locale;
         this.enabled = enabled;
         this.translations = translations;
     }
@@ -90,11 +90,11 @@ export class TranslationTable implements ITranslationTable {
      * Falls back to another translation table if the key is missing.
      *
      * @param key - The translation key to retrieve.
-     * @param fallback - A fallback translation table to use if the key is not found.
+     * @param fallback - A fallback language to use if the key is not found.
      * @param args - Optional arguments for dynamic translations.
      * @returns The translated string.
      */
-    get(key: TranslationKey, fallback: TranslationTable, ...args: any[]): string {
+    get(key: Text, fallback: Language, ...args: any[]): string {
         const translation = this.translations[key] ?? fallback.translations[key];
 
         if (!translation) {

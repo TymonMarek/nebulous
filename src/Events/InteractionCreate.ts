@@ -1,8 +1,8 @@
-import { Collection, Events, Interaction, MessageFlags, time } from "discord.js";
+import { Collection, Events, Interaction, MessageFlags } from "discord.js";
+import { Text } from "../Core/Enums/TranslationKey";
 import { Command } from "../Core/Commands/Command";
 import Event from "../Core/Events/Event"
 import Bot from "../Core/Bot";
-import { TranslationKey } from "../Core/Locale/TranslationKey";
 
 export default class InteractionCreate extends Event {
     constructor(bot: Bot) {
@@ -23,7 +23,7 @@ export default class InteractionCreate extends Event {
         if (!command) {
             this.bot.commands.delete(interaction.commandName);
             return interaction.reply({
-                content: this.bot.translations.get(interaction.locale, TranslationKey.UnknownCommandReply),
+                content: this.bot.localization.get(interaction.locale, Text.UnknownCommandReply),
                 flags: MessageFlags.Ephemeral
             });
         }

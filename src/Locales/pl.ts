@@ -1,17 +1,17 @@
-import { TranslationTable } from "../Core/Locale/TranslationTable";
-import { TranslationKey } from "../Core/Locale/TranslationKey";
+import { Language } from "../Core/Locale/Language";
+import { Text } from "../Core/Enums/TranslationKey";
 import { Locale } from "discord.js";
 
-export default class Polish extends TranslationTable {
+export default class Polish extends Language {
     constructor() {
         super({
-            languageName: "Polska",
-            localeCode: Locale.Polish,
+            name: "Polska",
+            locale: Locale.Polish,
             enabled: true,
 
             translations: {
-                [TranslationKey.UnknownCommandReply]: "To polecenie nie istnieje. Poczekaj kilka sekund, aż Discord odświeży polecenia lub uruchom ponownie klienta Discord.",
-                [TranslationKey.PingReply]: (ping: number) => `Pong, ${ping}ms!`,
+                [Text.UnknownCommandReply]: "To polecenie nie istnieje. Poczekaj kilka sekund, aż Discord odświeży polecenia lub uruchom ponownie klienta Discord.",
+                [Text.PingReply]: (ping: number) => `Pong, ${ping}ms!`,
             },
         });
     }

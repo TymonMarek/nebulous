@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, MessageFlags, PermissionsBitField } from "discord.js";
-import { TranslationKey } from "../Core/Locale/TranslationKey";
+import { Text } from "../Core/Enums/TranslationKey";
 import { Command } from "../Core/Commands/Command";
 import Bot from "../Core/Bot";
 
@@ -24,7 +24,7 @@ export default class Ping extends Command {
         const responseTime = Date.now() - startTime;
     
         await interaction.editReply({
-            content: this.bot.translations.get(interaction.locale, TranslationKey.PingReply, responseTime),
+            content: this.bot.localization.get(interaction.locale, Text.PingReply, responseTime),
         });
     }
     
