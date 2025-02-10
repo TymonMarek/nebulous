@@ -10,7 +10,7 @@ export default class Polish extends TranslationTable {
             enabled: true,
 
             translations: {
-                [TranslationKey.UnknownCommandReply]: "Nie wiem jak to się stało, ale ta funkcja nie istnieje!",
+                [TranslationKey.UnknownCommandReply]: "To polecenie nie istnieje. Poczekaj kilka sekund, aż Discord odświeży polecenia lub uruchom ponownie klienta Discord.",
                 [TranslationKey.PingReply]: (ping: number) => `Pong, ${ping}ms!`,
             },
         });
