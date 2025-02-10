@@ -1,6 +1,6 @@
+import { ChatInputCommandInteraction, MessageFlags, PermissionsBitField } from "discord.js";
 import { Command } from "../Core/Commands/Command";
 import Bot from "../Core/Bot";
-import { ChatInputCommandInteraction, MessageFlags, PermissionsBitField } from "discord.js";
 
 export default class Ping extends Command {
     constructor(bot: Bot) {

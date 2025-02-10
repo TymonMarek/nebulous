@@ -1,7 +1,7 @@
 import { Collection, Events, Interaction, REST, Routes } from "discord.js";
-import { Command } from "../../Core/Commands/Command.js";
-import Event from "../../Core/Events/Event.js";
-import Bot from "../../Core/Bot.js";
+import { Command } from "../../Core/Commands/Command";
+import Event from "../../Core/Events/Event";
+import Bot from "../../Core/Bot";
 
 export interface IJSONCommand {
     name: string;
@@ -21,6 +21,7 @@ export default class ClientReady extends Event {
     }
 
     OnEvent = async () => {
+        console.log(`Logged in as ${this.bot.user?.tag}`)
         const commands: IJSONCommand[] = this.GetJSON(this.bot.commands);
 
         const rest = new REST()

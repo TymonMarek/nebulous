@@ -1,9 +1,9 @@
-import CommandHandler from "./Commands/CommandHandler.js";
-import Enviroment from "./Configuration/Enviroment.js";
-import { SubCommand } from "./Commands/SubCommand.js";
-import EventHandler from "./Events/EventHandler.js";
+import CommandHandler from "./Commands/CommandHandler";
+import Enviroment from "./Configuration/Enviroment";
+import { SubCommand } from "./Commands/SubCommand";
+import EventHandler from "./Events/EventHandler";
 import { Client, Collection } from "discord.js";
-import { Command } from "./Commands/Command.js";
+import { Command } from "./Commands/Command";
 
 export interface IBot {
     enviroment: Enviroment;

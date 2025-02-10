@@ -1,3 +1,3 @@
-import Bot from "./Core/Bot.js";
+import Bot from "./Core/Bot";
 
 (new Bot()).Initialize();
