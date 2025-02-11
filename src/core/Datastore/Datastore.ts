@@ -39,8 +39,18 @@ export class Datastore extends PrismaClient implements IDatastore {
 
     constructor(bot: Bot) {
         super();
-
         this.bot = bot;
+        this.connectToDatabase()
+    }
+
+    private async connectToDatabase() {
+        try {
+            await this.$connect();
+            console.log("Connected to PostgrSQL successfully!");
+        } catch (error) {
+            console.error("Failed to connect to PostgrSQL:", error);
+            process.exit(1);
+        }
     }
 
     async get(user: User): Promise<Profile | null> {
