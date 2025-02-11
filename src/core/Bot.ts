@@ -1,6 +1,6 @@
 import { Client, Collection, Locale } from "discord.js";
 import CommandHandler from "./Commands/CommandHandler";
-import Enviroment from "./Configuration/Enviroment";
+import Environment from "./Configuration/Environment";
 import { SubCommand } from "./Commands/SubCommand";
 import EventHandler from "./Events/EventHandler";
 import Localization from "./Locale/Localization";
@@ -8,7 +8,7 @@ import { Language } from "./Locale/Language";
 import { Command } from "./Commands/Command";
 
 export interface IBot {
-    enviroment: Enviroment;
+    environment: Environment;
     
     eventHandler: EventHandler; 
     commandHandler: CommandHandler;
@@ -23,7 +23,7 @@ export interface IBot {
 }
 
 export default class Bot extends Client implements IBot {
-    enviroment: Enviroment;
+    environment: Environment;
 
     eventHandler: EventHandler;
     commandHandler: CommandHandler;
@@ -38,7 +38,7 @@ export default class Bot extends Client implements IBot {
     constructor() {
         super({intents: []});
 
-        this.enviroment = new Enviroment();
+        this.environment = new Environment();
                 
         this.commandHandler = new CommandHandler(this);
         this.eventHandler = new EventHandler(this);
@@ -50,7 +50,7 @@ export default class Bot extends Client implements IBot {
 
         this.cooldowns = new Collection();
 
-        this.login(this.enviroment.token);
+        this.login(this.environment.token);
     }
 
     Initialize() {
@@ -59,7 +59,6 @@ export default class Bot extends Client implements IBot {
 
     async LoadHandlers() {
         this.localization.LoadLocales();
-
         this.eventHandler.LoadEvents();
         this.commandHandler.LoadCommands();
     }
