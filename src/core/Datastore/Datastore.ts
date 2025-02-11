@@ -98,7 +98,4 @@ export class Datastore extends PrismaClient implements IDatastore {
         return profile;
     }
 
-    async safeSet() {
-        
-    }
 }
