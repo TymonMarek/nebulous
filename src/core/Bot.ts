@@ -6,9 +6,11 @@ import EventHandler from "./Events/EventHandler";
 import Localization from "./Locale/Localization";
 import { Language } from "./Locale/Language";
 import { Command } from "./Commands/Command";
+import { Datastore } from "./Datastore/Datastore";
 
 export interface IBot {
     environment: Environment;
+    datastore: Datastore;
     
     eventHandler: EventHandler; 
     commandHandler: CommandHandler;
@@ -24,6 +26,7 @@ export interface IBot {
 
 export default class Bot extends Client implements IBot {
     environment: Environment;
+    datastore: Datastore;
 
     eventHandler: EventHandler;
     commandHandler: CommandHandler;
@@ -47,10 +50,11 @@ export default class Bot extends Client implements IBot {
         this.subCommands = new Collection();
 
         this.localization = new Localization(this);
+        this.datastore = new Datastore(this);
 
         this.cooldowns = new Collection();
 
-        this.login(this.environment.token);
+        this.login(this.environment.DISCORD_TOKEN);
     }
 
     Initialize() {

@@ -13,7 +13,7 @@ export default class InteractionCreate extends Event {
         })
     }
     
-    OnEvent = (interaction: Interaction) => {
+    OnEvent = async (interaction: Interaction) => {
         if (!interaction.isChatInputCommand()) {
             return;
         }
@@ -23,7 +23,11 @@ export default class InteractionCreate extends Event {
         if (!command) {
             this.bot.commands.delete(interaction.commandName);
             return interaction.reply({
-                content: this.bot.localization.get(interaction.locale, Text.UnknownCommandReply),
+                content: await this.bot.localization.getLocalizedReply({
+                    interaction: interaction,
+                    text: Text.UnknownCommandReply,
+                    isEphemeral: true,
+                }),
                 flags: MessageFlags.Ephemeral
             });
         }

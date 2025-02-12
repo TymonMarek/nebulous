@@ -24,7 +24,11 @@ export default class Ping extends Command {
         const responseTime = Date.now() - startTime;
     
         await interaction.editReply({
-            content: this.bot.localization.get(interaction.locale, Text.PingReply, responseTime),
+            content: await this.bot.localization.getLocalizedReply({
+                interaction: interaction, 
+                text: Text.PingReply,
+                isEphemeral: false
+            }, responseTime),
         });
     }
     
