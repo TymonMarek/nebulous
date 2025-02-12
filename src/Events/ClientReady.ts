@@ -25,9 +25,9 @@ export default class ClientReady extends Event {
         const commands: IJSONCommand[] = this.GetJSON(this.bot.commands);
 
         const rest = new REST()
-            .setToken(this.bot.environment.token);
+            .setToken(this.bot.environment.DISCORD_TOKEN);
 
-        const setCommands = await rest.put(Routes.applicationCommands(this.bot.environment.clientId), {
+        const setCommands = await rest.put(Routes.applicationCommands(this.bot.environment.DISCORD_CLIENT_ID), {
             body: commands
         });
 
