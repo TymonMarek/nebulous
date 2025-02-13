@@ -11,4 +11,9 @@ export enum Text {
      * Reply message for the ping command.
      */
     PingReply = "PING_REPLY",
+
+    /**
+     * Reply message for `/locale get`.
+     */
+    LocaleGetReply = "LOCALE_GET_REPLY",
 }

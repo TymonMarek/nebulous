@@ -1,6 +1,6 @@
-import { Text } from "../Enums/TranslationKey";
+import { Text } from "../Enums/Text";
 import { Language } from "./Language";
-import { ChatInputCommandInteraction, Interaction, Locale, User } from "discord.js";
+import { Interaction, Locale, User } from "discord.js";
 import { glob } from "glob";
 import Bot from "../Bot";
 import path from "path";
@@ -66,7 +66,7 @@ export default class Localization implements ILocalization {
         return language.get(key, this.locales.get(defaultLocale)!, ...args);
     }
 
-    private async stringToLocale(string: string | null): Promise<Locale | undefined> {
+    async stringToLocale(string: string | null): Promise<Locale | undefined> {
         const normalizedString = string?.replace("-", "_") as Locale;
 
         if (Object.values(Locale).includes(normalizedString)) {

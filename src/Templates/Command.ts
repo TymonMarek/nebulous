@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, MessageFlags, PermissionsBitField } from "discord.js";
-import { Text } from "../Core/Enums/TranslationKey"; 
+import { Text } from "../Core/Enums/Text"; 
 import { Command } from "../Core/Commands/Command";
 import Bot from "../Core/Bot";
 

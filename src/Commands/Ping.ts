@@ -1,9 +1,9 @@
 import { ChatInputCommandInteraction, MessageFlags, PermissionsBitField } from "discord.js";
-import { Text } from "../Core/Enums/TranslationKey";
+import { Text } from "../Core/Enums/Text";
 import { Command } from "../Core/Commands/Command";
 import Bot from "../Core/Bot";
 
-export default class Ping extends Command {
+export default class PingCommand extends Command {
     constructor(bot: Bot) {
         super(bot, {
             name: "ping",

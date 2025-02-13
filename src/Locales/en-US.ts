@@ -1,5 +1,5 @@
 import { Language } from "../Core/Locale/Language";
-import { Text } from "../Core/Enums/TranslationKey";
+import { Text } from "../Core/Enums/Text";
 import { Locale } from "discord.js";
 
 export default class EnglishUS extends Language {

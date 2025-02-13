@@ -1,5 +1,5 @@
 import { Collection, Events, Interaction, MessageFlags } from "discord.js";
-import { Text } from "../Core/Enums/TranslationKey";
+import { Text } from "../Core/Enums/Text";
 import { Command } from "../Core/Commands/Command";
 import Event from "../Core/Events/Event"
 import Bot from "../Core/Bot";

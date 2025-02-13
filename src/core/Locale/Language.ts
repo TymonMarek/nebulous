@@ -1,4 +1,4 @@
-import { Text } from "../Enums/TranslationKey";
+import { Text } from "../Enums/Text";
 import { Locale } from "discord.js";
 
 /**
