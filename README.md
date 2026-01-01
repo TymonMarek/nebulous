@@ -2,6 +2,9 @@
 
 **nebulous** is a future-proof, production-ready, and open-source Discord bot built with TypeScript and Discord.js.
 
+> [!WARNING]
+> This project has been archived and is no longer maintained, if you to create your own Discord bot, I recommend checking out [Discord.JS](https://github.com/discordjs/discord.js).
+
 ## Features
 
 - 🚀 **Future-Proof**: Designed with scalability and maintainability in mind.
